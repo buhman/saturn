@@ -1,0 +1,5 @@
+*.o
+!/dts/*
+*.iso
+*.elf
+*.bin
