@@ -1,4 +1,6 @@
-TARGET=sh2be-none-elf-
+AFLAGS = -g
+
+TARGET = sh2be-none-elf-
 CC = $(TARGET)gcc
 AS = $(TARGET)as
 LD = $(TARGET)ld
@@ -34,7 +36,10 @@ ID_OBJ += sys_init.o
 ID_OBJ += smpsys.o
 
 %.o: %.s
-	$(AS) $(ARCH) $(AFLAGS) $< -o $@
+	$(AS) $(AFLAGS) $< -o $@
+
+%.o: %.S
+	$(CC) $(AFLAGS) -c $< -o $@
 
 ip.elf: $(ID_OBJ)
 	$(LD) --print-memory-usage -T ip.lds $^ -o $@
