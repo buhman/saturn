@@ -6,8 +6,7 @@ void start(void) {
 
   vdp2.reg.BGON = 0;
 
-  vdp2.reg.BKTAU = BKTAU__BKCLMD_SINGLE_COLOR | 0;
-  vdp2.reg.BKTAL = 0x4000;
+  vdp2.reg.BKTA = REG32_VAL(BKTAU__BKCLMD_SINGLE_COLOR, 0x4000);
 
   *((reg16 *)&vdp2.vram[0x8000]) = 31; // red
 

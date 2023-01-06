@@ -7,7 +7,7 @@ MEMORY
 }
 SECTIONS
 {
-  . = 0x06000000;
+  . = 0x06003000;
 
   .text ALIGN(2) : SUBALIGN(2)
   {
