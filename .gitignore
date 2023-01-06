@@ -1,0 +1,7 @@
+*.o
+!/dts/*
+dts/smpsys.o
+*.iso
+*.elf
+*.bin
+*.gch
