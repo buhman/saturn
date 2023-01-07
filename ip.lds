@@ -14,6 +14,7 @@ SECTIONS
     KEEP(*(.text.sec))
     KEEP(*(.text.are))
     KEEP(*(.text.init))
-    KEEP(*(.text.smp))
+    KEEP(*(.text.main))
+    KEEP(*(.text.*))
   } > rom
 }

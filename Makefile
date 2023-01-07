@@ -1,6 +1,6 @@
-AFLAGS = -g --isa=sh2 --big
+AFLAGS = -g -gdwarf-4 --isa=sh2 --big
 CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -Wno-error=unused-but-set-variable -g -Og
+CFLAGS += -Wall -Werror -Wno-error=unused-but-set-variable -g -gdwarf-4 -Og
 CARCH = -m2 -mb
 
 TARGET = sh2-none-elf-
@@ -13,7 +13,7 @@ OBJDUMP = $(TARGET)objdump
 all: main.iso
 
 define COPYELF
-	$(OBJCOPY) -I coff-sh -O elf32-sh \
+	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
 		--rename-section .text=.text.$1 \
 		$< $@
 endef
@@ -65,7 +65,7 @@ main.iso: main.bin ip.bin
 		main.bin
 
 clean:
-	rm -f *.iso *.o *.bin *.elf
+	rm -f *.iso *.o *.bin *.elf dts/smpsys.o
 
 .SUFFIXES:
 .INTERMEDIATE:

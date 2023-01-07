@@ -9,4 +9,4 @@ static_assert((sizeof (reg8)) == 1);
 static_assert((sizeof (reg16)) == 2);
 static_assert((sizeof (reg32)) == 4);
 
-#define REG32_VAL(U, L) (((U) << 16) | (L))
+#define REG_UL(U, L) (((U) << 16) | (L))
