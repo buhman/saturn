@@ -1,6 +1,6 @@
 AFLAGS = -g -gdwarf-4 --isa=sh2 --big
 CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -Wno-error=unused-but-set-variable -g -gdwarf-4 -Og
+CFLAGS += -Wall -Werror -g -gdwarf-4 -Og
 CARCH = -m2 -mb
 
 TARGET = sh2-none-elf-
@@ -56,7 +56,7 @@ main.iso: main.bin sys_ip.bin
 		main.bin
 
 clean:
-	rm -f *.iso *.o *.bin *.elf dts/smpsys.o
+	rm -f *.iso *.o *.bin *.elf
 
 .SUFFIXES:
 .INTERMEDIATE:

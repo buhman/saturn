@@ -1,6 +1,15 @@
 #include "vdp2.h"
 #include "vdp1.h"
 
+void fill_32(u32 * buf, u32 v, s32 n)
+{
+  while (n > 0) {
+    *buf = v;
+    buf += 1;
+    n -= (sizeof (u32));
+  }
+}
+
 void start(void) {
   //
   // vdp2: enable and set Back Screen color
@@ -48,10 +57,13 @@ void start(void) {
   vdp2.reg.MPABN0 = MPABN0__N0MPB(0) | MPABN0__N0MPA(1); // bits 5~0
   vdp2.reg.MPCDN0 = MPABN0__N0MPB(0) | MPABN0__N0MPA(1); // bits 5~0
 
+  // zeroize NBG0 plane; this should be less than 0x8000 above
+  s32 plane_size = 64 * 64 * 4; // is this correct ?
+  fill_32(&vdp2.vram.u32[(0x4000 / 4)], 0, plane_size);
+
   // Table 4.8  Address value of map designated register by setting
   // (bit 5~0) * 0x4000
   vdp2.vram.u32[(0x4000 / 4)] = PATTERN_NAME_TABLE_2WORD__CHARACTER(1);
-
 
   //
   // vdp1:
