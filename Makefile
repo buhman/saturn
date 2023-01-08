@@ -12,26 +12,16 @@ OBJDUMP = $(TARGET)objdump
 
 all: main.iso
 
-define COPYELF
+sys_%.o: segasmp/lib/sys_%.o
 	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
-		--rename-section .text=.text.$1 \
+		--rename-section .text=.text.$* \
 		$< $@
-endef
 
-sys_sec.o: dts/sys_sec.o
-	$(call COPYELF,sec)
-
-sys_are%.o: dts/sys_are%.o
-	$(call COPYELF,are)
-
-sys_init.o: dts/sys_init.o
-	$(call COPYELF,init)
-
-ID_OBJ += sys_id.o
-ID_OBJ += sys_sec.o
-ID_OBJ += sys_arej.o sys_aret.o sys_areu.o sys_aree.o
-ID_OBJ += sys_init.o
-ID_OBJ += dts/smpsys.o
+SYS_IP_OBJ += sys_id.o
+SYS_IP_OBJ += sys_sec.o
+SYS_IP_OBJ += sys_arej.o sys_aret.o sys_areu.o sys_aree.o
+SYS_IP_OBJ += sys_init.o
+SYS_IP_OBJ += smpsys.o
 
 %.o: %.s
 	$(AS) $(AFLAGS) $< -o $@
@@ -42,8 +32,8 @@ ID_OBJ += dts/smpsys.o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-ip.elf: $(ID_OBJ)
-	$(LD) --print-memory-usage -T ip.lds $^ -o $@
+sys_ip.elf: $(SYS_IP_OBJ)
+	$(LD) --print-memory-usage -T sys_ip.lds $^ -o $@
 
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
@@ -53,15 +43,16 @@ MAIN_OBJ = main.o
 main.elf: $(MAIN_OBJ)
 	$(LD) --print-memory-usage -T sh2.lds $^ -o $@
 
-main.iso: main.bin ip.bin
+main.iso: main.bin sys_ip.bin
 	mkisofs \
 		-sysid "SEGA SEGASATURN" \
 		-volid "SAMPLE_GAME_TITLE" \
 		-volset "SAMPLE_GAME_TITLE" \
 		-publisher "SEGA ENTERPRISES, LTD." \
 		-preparer "SEGA ENTERPRISES, LTD." \
-		-G ip.bin \
+		-G sys_ip.bin \
 		-o $@ \
+		main.bin \
 		main.bin
 
 clean:

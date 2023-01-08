@@ -1,6 +1,5 @@
 *.o
-!/dts/*
-dts/smpsys.o
+!/segasmp/lib/*
 *.iso
 *.elf
 *.bin

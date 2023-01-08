@@ -14,8 +14,8 @@
         .ascii "                " /* B0: */
         .ascii "                " /* C0: */
         .long 0x00000000, 0x00000000, 0x00000000, 0x00000000 /* D0: */
-        .long 0x000012e8, 0x00000000, 0x00000000, 0x00000000 /* E0: IP SIZE, reserved, STACK-M, STACK-S */
-        .long 0x06003000, 0x00000000, 0x00000000, 0x00000000 /* F0: Transfer destination address */
+        .long _text_size, 0x00000000, 0x00000000, 0x00000000 /* E0: IP SIZE, reserved, STACK-M, STACK-S */
+        .long _load_addr, 0x00000000, 0x00000000, 0x00000000 /* F0: Transfer destination address */
         /* Larger than (60020000H+IP SIZE), smaller than (6100000-4) */
 
         /* IP SIZE of 0x1000 is manually calculated; this is coincidentally the

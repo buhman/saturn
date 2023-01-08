@@ -12,9 +12,11 @@ SECTIONS
   {
     KEEP(*(.text.id))
     KEEP(*(.text.sec))
-    KEEP(*(.text.are))
+    KEEP(*(.text.are*))
     KEEP(*(.text.init))
-    KEEP(*(.text.main))
     KEEP(*(.text.*))
   } > rom
 }
+
+_text_size = SIZEOF(.text);
+_load_addr = 0x06010000;
