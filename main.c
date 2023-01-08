@@ -1,5 +1,7 @@
 #include "vdp2.h"
 #include "vdp1.h"
+#include "scu.h"
+#include "smpc.h"
 
 void fill_32(u32 * buf, u32 v, s32 n)
 {
@@ -10,7 +12,40 @@ void fill_32(u32 * buf, u32 v, s32 n)
   }
 }
 
-void start(void) {
+void timer0_int(void) __attribute__ ((interrupt_handler));
+void timer0_int(void)
+{
+  scu.reg.IST &= ~(IST__TIMER0);
+
+  // The SMPC uses the V-BLANK-IN interrupt to execute internal tasks. At this
+  // time, issuing commands for 300 µs from V-BLANK-IN is prohibited.
+
+  while (smpc.reg.SF != 0) {}
+
+  smpc.reg.SF = 0;
+
+  smpc.reg.IREG0 = INTBACK__IREG0__STATUS_DISABLE;
+  smpc.reg.IREG1 = ( INTBACK__IREG1__PERIPHERAL_DATA_ENABLE
+                   | INTBACK__IREG1__PORT2_15BYTE
+                   | INTBACK__IREG1__PORT1_15BYTE
+                   );
+  smpc.reg.IREG2 = INTBACK__IREG2__MAGIC;
+
+  smpc.reg.COMREG = COMREG__INTBACK;
+}
+
+void smpc_int(void) __attribute__ ((interrupt_handler));
+void smpc_int(void)
+{
+  scu.reg.IST &= ~(IST__SMPC);
+
+
+
+  smpc.reg.IREG0 = INTBACK__IREG0__BREAK;
+}
+
+void start(void)
+{
   //
   // vdp2: enable and set Back Screen color
   //
@@ -148,5 +183,22 @@ void start(void) {
   // start drawing
   vdp1.reg.PTMR = PTMR__PTM__FRAME_CHANGE;
 
-  while (1) {}
+  //
+  // scu1:
+  //
+
+  // If timer0 is counting at roughly 15.73426 kHz (1/63.5556 µs), we can count
+  // to 300µs at roughly T0C = 5 (~317.778 µs). H-Blank-IN subtracts about
+  // 10.9µs which is still (~306 µs) more than 300µs.
+
+  vec[SCU_VEC__TIMER0] = (u32)(&timer0_int);
+  vec[SCU_VEC__SMPC] = (u32)(&smpc_int);
+  scu.reg.T0C = 5;
+  scu.reg.T1MD = T1MD__TENB;
+  scu.reg.IST = 0;
+  scu.reg.IMS = ~(IMS__TIMER0 | IMS__SMPC);
+
+  while (1) {
+    vec[0] = scu.reg.IST;
+  }
 }

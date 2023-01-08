@@ -37,3 +37,5 @@ scsp = 0x05A00000;
 vdp1 = 0x05C00000;
 vdp2 = 0x05E00000;
 scu  = 0x05FE0000;
+vec  = 0x06000000;
+sh2  = 0xfffffe00;

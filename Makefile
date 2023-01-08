@@ -19,7 +19,8 @@ sys_%.o: segasmp/lib/sys_%.o
 
 SYS_IP_OBJ += sys_id.o
 SYS_IP_OBJ += sys_sec.o
-SYS_IP_OBJ += sys_arej.o sys_aret.o sys_areu.o sys_aree.o
+SYS_IP_OBJ += sys_area.o sys_areb.o sys_aree.o sys_arej.o
+SYS_IP_OBJ += sys_arek.o sys_arel.o sys_aret.o sys_areu.o
 SYS_IP_OBJ += sys_init.o
 SYS_IP_OBJ += smpsys.o
 

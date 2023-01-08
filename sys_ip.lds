@@ -3,19 +3,41 @@ OUTPUT_ARCH(sh)
 
 MEMORY
 {
-  rom (arx) : ORIGIN = 0x06002000, LENGTH = 4M
+  ip (arx) : ORIGIN = 0x06002000, LENGTH = 4096
 }
 
 SECTIONS
 {
-  .text : ALIGN(4)
+  .text :
   {
     KEEP(*(.text.id))
     KEEP(*(.text.sec))
-    KEEP(*(.text.are*))
+
+    /*
+    SEGA SATURN TECHNICAL BULLETIN #SOA-12:
+
+       Please make sure that the area symbols and area codes
+       match in order.
+
+       The final IP.BIN must be 4096 bytes.
+
+       ABEJKLTU
+    */
+    KEEP(*(.text.arej))
+    KEEP(*(.text.area))
+    KEEP(*(.text.areb))
+    KEEP(*(.text.aree))
+    KEEP(*(.text.arek))
+    KEEP(*(.text.arel))
+    KEEP(*(.text.aret))
+    KEEP(*(.text.areu))
+
     KEEP(*(.text.init))
+    KEEP(*(.text.main))
     KEEP(*(.text.*))
-  } > rom
+
+    . = 4096;
+  } > ip
 }
 
 _text_size = SIZEOF(.text);

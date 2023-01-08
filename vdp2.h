@@ -193,7 +193,7 @@ extern struct vdp2 vdp2 __asm("vdp2");
 
 /* register bits */
 
-enum bits_tvmd {
+enum tvmd_bit {
   TVMD__DISP = (1 << 15),
   TVMD__BDCLMD = (1 << 8), // display back screen
   TVMD__LSMD__NON_INTERLACE = (0b00 << 6),
@@ -214,36 +214,36 @@ enum bits_tvmd {
   TVMD__HRESO__EXCLUSIVE_640 = (0b110 << 0),
   TVMD__HRESO__EXCLUSIVE_704 = (0b111 << 0),
 };
-// enum bits_exten {
+// enum exten_bit {
 // };
-enum bits_tvstat {
+enum tvstat_bit {
   TVSTAT__VBLANK = (1 << 3),
 };
-// enum bits_vrsize {
+// enum vrsize_bit {
 // };
-// enum bits_hcnt {
+// enum hcnt_bit {
 // };
-// enum bits_vcnt {
+// enum vcnt_bit {
 // };
-// enum bits_ramctl {
+// enum ramctl_bit {
 // };
-// enum bits_cyca0l {
+// enum cyca0l_bit {
 // };
-// enum bits_cyca0u {
+// enum cyca0u_bit {
 // };
-// enum bits_cyca1l {
+// enum cyca1l_bit {
 // };
-// enum bits_cyca1u {
+// enum cyca1u_bit {
 // };
-// enum bits_cycb0l {
+// enum cycb0l_bit {
 // };
-// enum bits_cycb0u {
+// enum cycb0u_bit {
 // };
-// enum bits_cycb1l {
+// enum cycb1l_bit {
 // };
-// enum bits_cycb1u {
+// enum cycb1u_bit {
 // };
-enum bits_bgon {
+enum bgon_bit {
   BGON__R0TPON = (1 << 12),
   BGON__N3TPON = (1 << 11),
   BGON__N2TPON = (1 << 10),
@@ -257,13 +257,13 @@ enum bits_bgon {
   BGON__N1ON = (1 << 1),
   BGON__N0ON = (1 << 0),
 };
-// enum bits_mzctl {
+// enum mzctl_bit {
 // };
-// enum bits_sfsel {
+// enum sfsel_bit {
 // };
-// enum bits_sfcode {
+// enum sfcode_bit {
 // };
-enum bits_chctla {
+enum chctla_bit {
   CHCTLA__N1CHCN__16_COLOR = (0b00 << 12),
   CHCTLA__N1CHCN__256_COLOR = (0b00 << 12),
   CHCTLA__N1CHCN__2K_COLOR = (0b00 << 12),
@@ -297,7 +297,7 @@ enum bits_chctla {
   CHCTLA__N0CHSZ__1x1_CELL = (0 << 0),
   CHCTLA__N0CHSZ__2x2_CELL = (1 << 0),
 };
-enum bits_chctlb {
+enum chctlb_bit {
   CHCTLB__R0CHCN__16_COLOR = (0b000 << 12),
   CHCTLB__R0CHCN__256_COLOR = (0b001 << 12),
   CHCTLB__R0CHCN__2K_COLOR = (0b010 << 12),
@@ -325,12 +325,12 @@ enum bits_chctlb {
   CHCTLB__N2CHSZ__1x1_CELL = (0 << 4),
   CHCTLB__N2CHSZ__2x2_CELL = (1 << 4),
 };
-// enum bits_bmpna {
+// enum bmpna_bit {
 // };
-// enum bits_bmpnb {
+// enum bmpnb_bit {
 // };
 
-enum bits_pncn0 {
+enum pncn0_bit {
   PNCN0__N0PNB__2WORD = (0 << 15),
   PNCN0__N0PNB__1WORD = (1 << 15),
   PNCN0__N0CNSM = (1 << 14),
@@ -340,7 +340,7 @@ enum bits_pncn0 {
 #define PNCN0__N0SCN(n) (n << 0)
 };
 
-enum bits_pncn1 {
+enum pncn1_bit {
   PNCN1__N1PNB__2WORD = (0 << 15),
   PNCN1__N1PNB__1WORD = (1 << 15),
   PNCN1__N1CNSM = (1 << 14),
@@ -350,7 +350,7 @@ enum bits_pncn1 {
 #define PNCN1__N1SCN(n) (n << 0)
 };
 
-enum bits_pncn2 {
+enum pncn2_bit {
   PNCN2__N2PNB__2WORD = (0 << 15),
   PNCN2__N2PNB__1WORD = (1 << 15),
   PNCN2__N2CNSM = (1 << 14),
@@ -360,7 +360,7 @@ enum bits_pncn2 {
 #define PNCN2__N2SCN(n) (n << 0)
 };
 
-enum bits_pncn3 {
+enum pncn3_bit {
   PNCN3__N3PNB__2WORD = (0 << 15),
   PNCN3__N3PNB__1WORD = (1 << 15),
   PNCN3__N3CNSM = (1 << 14),
@@ -370,7 +370,7 @@ enum bits_pncn3 {
 #define PNCN3__N3SCN(n) (n << 0)
 };
 
-enum bits_pncr {
+enum pncr_bit {
   PNCR__R0PNB__2WORD = (0 << 15),
   PNCR__R0PNB__1WORD = (1 << 15),
   PNCR__R0CNSM = (1 << 14),
@@ -380,7 +380,7 @@ enum bits_pncr {
 #define PNCR__R0SCN(n) (n << 0)
 };
 
-enum bits_plsz {
+enum plsz_bit {
   PLSZ__RBOVR__ = (0b00 << 14),
   PLSZ__RBPLSZ__ = (0b00 << 12),
   PLSZ__RAOVR__ = (0b00 << 10),
@@ -402,258 +402,258 @@ enum bits_plsz {
   PLSZ__N0PLSZ__2x1 = (0b01 << 0),
   PLSZ__N0PLSZ__2x2 = (0b11 << 0),
 };
-// enum bits_mpofn {
+// enum mpofn_bit {
 #define MPOFN__N3MP(n) (n << 12)
 #define MPOFN__N2MP(n) (n << 8)
 #define MPOFN__N1MP(n) (n << 4)
 #define MPOFN__N0MP(n) (n << 0)
 // };
-// enum bits_mpofr {
+// enum mpofr_bit {
 #define MPOFR__RBMP(n) (n << 4)
 #define MPOFR__RAMP(n) (n << 0)
 // };
 
 // 4.8 Maps § Map Selection Register
 
-// enum bits_mpabn0 {
+// enum mpabn0_bit {
 #define MPABN0__N0MPB(n) (n << 8)
 #define MPABN0__N0MPA(n) (n << 0)
 // };
-// enum bits_mpcdn0 {
+// enum mpcdn0_bit {
 #define MPABN0__N0MPD(n) (n << 8)
 #define MPABN0__N0MPC(n) (n << 0)
 // };
-// enum bits_mpabn1 {
+// enum mpabn1_bit {
 #define MPABN1__N1MPB(n) (n << 8)
 #define MPABN1__N1MPA(n) (n << 0)
 // };
-// enum bits_mpcdn1 {
+// enum mpcdn1_bit {
 #define MPABN1__N1MPD(n) (n << 8)
 #define MPABN1__N1MPC(n) (n << 0)
 // };
-// enum bits_mpabn2 {
+// enum mpabn2_bit {
 #define MPABN2__N2MPB(n) (n << 8)
 #define MPABN2__N2MPA(n) (n << 0)
 // };
-// enum bits_mpcdn2 {
+// enum mpcdn2_bit {
 #define MPABN2__N2MPD(n) (n << 8)
 #define MPABN2__N2MPC(n) (n << 0)
 // };
-// enum bits_mpabn3 {
+// enum mpabn3_bit {
 #define MPABN3__N3MPB(n) (n << 8)
 #define MPABN3__N3MPA(n) (n << 0)
 // };
-// enum bits_mpcdn3 {
+// enum mpcdn3_bit {
 #define MPABN3__N3MPD(n) (n << 8)
 #define MPABN3__N3MPC(n) (n << 0)
 // };
-// enum bits_mpabra {
+// enum mpabra_bit {
 // };
-// enum bits_mpcdra {
+// enum mpcdra_bit {
 // };
-// enum bits_mpefra {
+// enum mpefra_bit {
 // };
-// enum bits_mpghra {
+// enum mpghra_bit {
 // };
-// enum bits_mpijra {
+// enum mpijra_bit {
 // };
-// enum bits_mpklra {
+// enum mpklra_bit {
 // };
-// enum bits_mpmnra {
+// enum mpmnra_bit {
 // };
-// enum bits_mpopra {
+// enum mpopra_bit {
 // };
-// enum bits_mpabrb {
+// enum mpabrb_bit {
 // };
-// enum bits_mpcdrb {
+// enum mpcdrb_bit {
 // };
-// enum bits_mpefrb {
+// enum mpefrb_bit {
 // };
-// enum bits_mpghrb {
+// enum mpghrb_bit {
 // };
-// enum bits_mpijrb {
+// enum mpijrb_bit {
 // };
-// enum bits_mpklrb {
+// enum mpklrb_bit {
 // };
-// enum bits_mpmnrb {
+// enum mpmnrb_bit {
 // };
-// enum bits_mpoprb {
+// enum mpoprb_bit {
 // };
-// enum bits_scxin0 {
+// enum scxin0_bit {
 // };
-// enum bits_scxdn0 {
+// enum scxdn0_bit {
 // };
-// enum bits_scyin0 {
+// enum scyin0_bit {
 // };
-// enum bits_scydn0 {
+// enum scydn0_bit {
 // };
-// enum bits_zmxin0 {
+// enum zmxin0_bit {
 // };
-// enum bits_zmxdn0 {
+// enum zmxdn0_bit {
 // };
-// enum bits_zmyin0 {
+// enum zmyin0_bit {
 // };
-// enum bits_zmydn0 {
+// enum zmydn0_bit {
 // };
-// enum bits_scxin1 {
+// enum scxin1_bit {
 // };
-// enum bits_scxdn1 {
+// enum scxdn1_bit {
 // };
-// enum bits_scyin1 {
+// enum scyin1_bit {
 // };
-// enum bits_scydn1 {
+// enum scydn1_bit {
 // };
-// enum bits_zmxin1 {
+// enum zmxin1_bit {
 // };
-// enum bits_zmxdn1 {
+// enum zmxdn1_bit {
 // };
-// enum bits_zmyin1 {
+// enum zmyin1_bit {
 // };
-// enum bits_zmydn1 {
+// enum zmydn1_bit {
 // };
-// enum bits_scxn2 {
+// enum scxn2_bit {
 // };
-// enum bits_scyn2 {
+// enum scyn2_bit {
 // };
-// enum bits_scxn3 {
+// enum scxn3_bit {
 // };
-// enum bits_scyn3 {
+// enum scyn3_bit {
 // };
-// enum bits_zmctl {
+// enum zmctl_bit {
 // };
-// enum bits_scrctl {
+// enum scrctl_bit {
 // };
-// enum bits_vcstau {
+// enum vcstau_bit {
 // };
-// enum bits_vcstal {
+// enum vcstal_bit {
 // };
-// enum bits_lsta0u {
+// enum lsta0u_bit {
 // };
-// enum bits_lsta0l {
+// enum lsta0l_bit {
 // };
-// enum bits_lsta1u {
+// enum lsta1u_bit {
 // };
-// enum bits_lsta1l {
+// enum lsta1l_bit {
 // };
-// enum bits_lctau {
+// enum lctau_bit {
 // };
-// enum bits_lctal {
+// enum lctal_bit {
 // };
-enum bits_bktau {
+enum bktau_bit {
   BKTAU__BKCLMD_SINGLE_COLOR = (0 << 15),
   BKTAU__BKCLMD_PER_LINE = (1 << 15),
 };
-// enum bits_bktal {
+// enum bktal_bit {
 // };
-// enum bits_rpmd {
+// enum rpmd_bit {
 // };
-// enum bits_rprctl {
+// enum rprctl_bit {
 // };
-// enum bits_ktctl {
+// enum ktctl_bit {
 // };
-// enum bits_ktaof {
+// enum ktaof_bit {
 // };
-// enum bits_ovpnra {
+// enum ovpnra_bit {
 // };
-// enum bits_ovpnrb {
+// enum ovpnrb_bit {
 // };
-// enum bits_rptau {
+// enum rptau_bit {
 // };
-// enum bits_rptal {
+// enum rptal_bit {
 // };
-// enum bits_wpsx0 {
+// enum wpsx0_bit {
 // };
-// enum bits_wpsy0 {
+// enum wpsy0_bit {
 // };
-// enum bits_wpex0 {
+// enum wpex0_bit {
 // };
-// enum bits_wpey0 {
+// enum wpey0_bit {
 // };
-// enum bits_wpsx1 {
+// enum wpsx1_bit {
 // };
-// enum bits_wpsy1 {
+// enum wpsy1_bit {
 // };
-// enum bits_wpex1 {
+// enum wpex1_bit {
 // };
-// enum bits_wpey1 {
+// enum wpey1_bit {
 // };
-// enum bits_wctla {
+// enum wctla_bit {
 // };
-// enum bits_wctlb {
+// enum wctlb_bit {
 // };
-// enum bits_wctlc {
+// enum wctlc_bit {
 // };
-// enum bits_wctld {
+// enum wctld_bit {
 // };
-// enum bits_lwta0u {
+// enum lwta0u_bit {
 // };
-// enum bits_lwta0l {
+// enum lwta0l_bit {
 // };
-// enum bits_lwta1u {
+// enum lwta1u_bit {
 // };
-// enum bits_lwta1l {
+// enum lwta1l_bit {
 // };
-// enum bits_spctl {
+// enum spctl_bit {
 // };
-// enum bits_sdctl {
+// enum sdctl_bit {
 // };
-// enum bits_craofa {
+// enum craofa_bit {
 // };
-// enum bits_craofb {
+// enum craofb_bit {
 // };
-// enum bits_lnclen {
+// enum lnclen_bit {
 // };
-// enum bits_sfprmd {
+// enum sfprmd_bit {
 // };
-// enum bits_ccctl {
+// enum ccctl_bit {
 // };
-// enum bits_sfccmd {
+// enum sfccmd_bit {
 // };
-// enum bits_prisa {
+// enum prisa_bit {
 // };
-// enum bits_prisb {
+// enum prisb_bit {
 // };
-// enum bits_prisc {
+// enum prisc_bit {
 // };
-// enum bits_prisd {
+// enum prisd_bit {
 // };
-// enum bits_prina {
+// enum prina_bit {
 // };
-// enum bits_prinb {
+// enum prinb_bit {
 // };
-// enum bits_prir {
+// enum prir_bit {
 // };
-// enum bits_ccrsa {
+// enum ccrsa_bit {
 // };
-// enum bits_ccrsb {
+// enum ccrsb_bit {
 // };
-// enum bits_ccrsc {
+// enum ccrsc_bit {
 // };
-// enum bits_ccrsd {
+// enum ccrsd_bit {
 // };
-// enum bits_ccrna {
+// enum ccrna_bit {
 // };
-// enum bits_ccrnb {
+// enum ccrnb_bit {
 // };
-// enum bits_ccrr {
+// enum ccrr_bit {
 // };
-// enum bits_ccrlb {
+// enum ccrlb_bit {
 // };
-// enum bits_clofen {
+// enum clofen_bit {
 // };
-// enum bits_clofsl {
+// enum clofsl_bit {
 // };
-// enum bits_coar {
+// enum coar_bit {
 // };
-// enum bits_coag {
+// enum coag_bit {
 // };
-// enum bits_coab {
+// enum coab_bit {
 // };
-// enum bits_cobr {
+// enum cobr_bit {
 // };
-// enum bits_cobg {
+// enum cobg_bit {
 // };
-// enum bits_cobb {
+// enum cobb_bit {
 // };
 
 

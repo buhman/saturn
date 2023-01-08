@@ -25,7 +25,7 @@ static_assert((sizeof (struct vdp1_cmd)) == 0x20);
 
 /* command table bits */
 
-enum bits_ctrl {
+enum ctrl_bit {
   CTRL__END = (1 << 15),
 
   CTRL__JP__JUMP_NEXT   = (0b000 << 12),
@@ -64,7 +64,7 @@ enum bits_ctrl {
   CTRL__COMM__LOCAL_COORDINATE        = (0b1010),
 };
 
-enum bits_pmod {
+enum pmod_bit {
   CTRL__PMOD__MON = (1 << 15),
   CTRL__PMOD__HSS = (1 << 12),
   CTRL__PMOD__PCLP = (1 << 11),
@@ -133,7 +133,7 @@ extern struct vdp1 vdp1 __asm("vdp1");
 
 /* register bits */
 
-enum bits_tvmr {
+enum tvmr_bit {
   TVMR__VBE = (1 << 3),
   TVMR__TVM__NTSC_PAL = (0 << 2),
   TVMR__TVM__HDTV_31KC = (1 << 2),
@@ -143,7 +143,7 @@ enum bits_tvmr {
   TVMR__TVM__8BPP = (1 << 0),
 };
 
-enum bits_fbcr {
+enum fbcr_bit {
   FBCR__EOS = (1 << 4),
   FBCR__DIE = (1 << 3),
   FBCR__DIL = (1 << 2),
@@ -151,19 +151,19 @@ enum bits_fbcr {
   FBCR__FCT = (1 << 0),
 };
 
-enum bits__ptmr {
+enum ptmr_bit {
   PTMR__PTM__IDLE = 0b00,
   PTMR__PTM__NOW = 0b01,
   PTMR__PTM__FRAME_CHANGE = 0b10,
 };
 
-// enum bits__ewlr {
+// enum ewlr_bit {
 #define PTMR__EWLR__16BPP_X1(n) ((n / 8 ) << 9)
 #define PTMR__EWLR__8BPP_X1(n)  ((n / 16) << 9)
 #define PTMR__EWLR__Y1(n) (n << 0)
 // }
 
-// enum bits__ewrr {
+// enum ewrr_bit {
 #define PTMR__EWRR__16BPP_X3(n) (((n + 1) / 8 ) << 9)
 #define PTMR__EWLR__8BPP_X3(n)  (((n + 1) / 16) << 9)
 #define PTMR__EWRR__Y3(n) (n << 0)

@@ -4,7 +4,7 @@
         .ascii "SEGA TP KAISHA-A" /* 10: maker ID */
         .ascii "999999999 V1.000" /* 20: product number, version */
         .ascii "19941122CD-1/1  " /* 30: release date, device information */
-        .ascii "JTUE            " /* 40: compatible area symbol */
+        .ascii "JABEKLTU        " /* 40: compatible area symbol */
         .ascii "J               " /* 50: compatible peripheral */
         .ascii "GAME TITLE      " /* 60: game title */
         .ascii "                " /* 70: */
