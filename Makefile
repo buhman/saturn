@@ -44,6 +44,24 @@ MAIN_OBJ = main.o
 main.elf: $(MAIN_OBJ)
 	$(LD) --print-memory-usage -T sh2.lds $^ -o $@
 
+# mkisofs sorts file names alphabetically, it does not place the files in the
+# generated directory descriptors the order given on the command-line.
+#
+# The "1st read file" must be physically placed at index [2] (after the "self"
+# and "parent" entries) of the root directory, and so must be alphabetically
+# lowest in the list of files.
+#
+# Additionally, the sega bios appears to reject disks that have a single
+# file. This is presumably incomplete enforcement of the "required" smp_cpy.txt,
+# smp_abs.txt, and smp_bib.txt files. A disk with a single file is presumed
+# invalid (but >=2 files appears to be ok). The content of these files does not
+# appear to be checked.
+#
+# Rather than insert a dummy file to "trick" the bios, I decided to include
+# these files as specified in the manual (perhaps there are some bios versions
+# that do check this).
+#
+# `-graft-points` is used to enable the "path grafting" pathspec syntax.
 main.iso: main.bin sys_ip.bin
 	mkisofs \
 		-sysid "SEGA SEGASATURN" \
@@ -51,10 +69,17 @@ main.iso: main.bin sys_ip.bin
 		-volset "SAMPLE_GAME_TITLE" \
 		-publisher "SEGA ENTERPRISES, LTD." \
 		-preparer "SEGA ENTERPRISES, LTD." \
+		-copyright "smp_cpy.txt" \
+		-abstract "smp_abs.txt" \
+		-biblio "smp_bib.txt" \
+		-sectype data \
 		-G sys_ip.bin \
 		-o $@ \
-		main.bin \
-		main.bin
+		-graft-points \
+		/0main.bin=./main.bin \
+		/=./segasmp/smp_cpy.txt \
+		/=./segasmp/smp_abs.txt \
+		/=./segasmp/smp_bib.txt
 
 clean:
 	rm -f *.iso *.o *.bin *.elf
