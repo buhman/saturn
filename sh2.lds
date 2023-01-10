@@ -30,6 +30,8 @@ SECTIONS
     *(.bss)
   } > work_ram_h
 
+  __bss_link_start = ADDR(.bss);
+  __bss_link_end = ADDR(.bss) + SIZEOF(.bss);
 }
 
 smpc = 0x00100000;
