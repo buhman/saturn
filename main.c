@@ -44,7 +44,7 @@ void oci_int(void)
 
   smpc.reg.IREG0 = INTBACK__IREG0__STATUS_DISABLE;
   smpc.reg.IREG1 = ( INTBACK__IREG1__PERIPHERAL_DATA_ENABLE
-                   | INTBACK__IREG1__PORT2_15BYTE
+                   | INTBACK__IREG1__PORT2_0BYTE
                    | INTBACK__IREG1__PORT1_15BYTE
                    );
   smpc.reg.IREG2 = INTBACK__IREG2__MAGIC;
@@ -59,6 +59,26 @@ void smpc_int(void) __attribute__ ((interrupt_handler));
 void smpc_int(void)
 {
   scu.reg.IST &= ~(IST__SMPC);
+
+  if (smpc.reg.SR & SR__PDL) {
+    // to get all controller data, one should check SR__NPE and send CONTINUE
+    // requests as needed
+
+    // assuming SR__PDL is set and SR__P1MD is not 0-byte-mode:
+    //   smpc.reg.OREG0 (port 1 status)
+    //   smpc.reg.OREG1 (peripheral 1 data[0] {type,size})
+    //   smpc.reg.OREG2 (peripheral 1 data[1])
+
+    if ((smpc.reg.OREG2 & DIGITAL__1__C) == 0) {
+      // if C is pressed, swap the color palette
+      vdp2.cram.u16[1] = (0x31 << 10); // blue
+      vdp2.cram.u16[2] = (0x31 << 5);  // green
+    } else {
+      // if C is not pressed, restore the original palette
+      vdp2.cram.u16[1] = (0x31 << 5);  // green
+      vdp2.cram.u16[2] = (0x31 << 10); // blue
+    }
+  }
 
   smpc.reg.IREG0 = INTBACK__IREG0__BREAK;
 }

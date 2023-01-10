@@ -180,3 +180,37 @@ enum intback_ireg_bit {
 
   INTBACK__IREG2__MAGIC = (0xF0),
 };
+
+enum sr_bit {
+  SR__PDL = (1 << 6),
+  SR__NPE = (1 << 5),
+  SR__RESB = (1 << 4),
+  SR__P2MD1 = (1 << 3),
+  SR__P2MD0 = (1 << 2),
+  SR__P1MD1 = (1 << 1),
+  SR__P1MD0 = (1 << 0),
+#define SR__P2MD__15BYTE(sr) (((sr & 0b00001100)) == (0b00 << 2))
+#define SR__P2MD__255BYTE(sr) (((sr & 0b00001100)) == (0b01 << 2))
+#define SR__P2MD__0BYTE(sr) (((sr & 0b00001100)) == (0b11 << 2))
+
+#define SR__P1MD__15BYTE(sr) (((sr & 0b00000011)) == (0b00 << 0))
+#define SR__P1MD__255BYTE(sr) (((sr & 0b00000011)) == (0b01 << 0))
+#define SR__P1MD__0BYTE(sr) (((sr & 0b00000011)) == (0b11 << 0))
+};
+
+enum digital_bit {
+  DIGITAL__1__RIGHT = (1 << 7),
+  DIGITAL__1__LEFT = (1 << 6),
+  DIGITAL__1__DOWN = (1 << 5),
+  DIGITAL__1__UP = (1 << 4),
+  DIGITAL__1__START = (1 << 3),
+  DIGITAL__1__A = (1 << 2),
+  DIGITAL__1__C = (1 << 1),
+  DIGITAL__1__B = (1 << 0),
+
+  DIGITAL__2__R = (1 << 7),
+  DIGITAL__2__X = (1 << 6),
+  DIGITAL__2__Y = (1 << 5),
+  DIGITAL__2__Z = (1 << 4),
+  DIGITAL__2__L = (1 << 3),
+};
