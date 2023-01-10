@@ -2,6 +2,7 @@
 #include "vdp1.h"
 #include "scu.h"
 #include "smpc.h"
+#include "sh2.h"
 
 void fill_32(u32 * buf, u32 v, s32 n)
 {
@@ -16,9 +17,13 @@ void timer0_int(void) __attribute__ ((interrupt_handler));
 void timer0_int(void)
 {
   scu.reg.IST &= ~(IST__TIMER0);
+}
 
-  // The SMPC uses the V-BLANK-IN interrupt to execute internal tasks. At this
-  // time, issuing commands for 300 µs from V-BLANK-IN is prohibited.
+void oci_int(void) __attribute__ ((interrupt_handler));
+void oci_int(void)
+{
+  // clear OCFA
+  sh2.reg.FTCSR &= ~(FTCSR__OCFA);
 
   while (smpc.reg.SF != 0) {}
 
@@ -193,10 +198,53 @@ void start(void)
 
   vec[SCU_VEC__TIMER0] = (u32)(&timer0_int);
   vec[SCU_VEC__SMPC] = (u32)(&smpc_int);
-  scu.reg.T0C = 5;
-  scu.reg.T1MD = T1MD__TENB;
+  //scu.reg.T0C = 5;
+  //scu.reg.T1MD = T1MD__TENB;
+
+  // From the SMPC manual:
+  //   The SMPC uses the V-BLANK-IN interrupt to execute internal tasks. At this
+  //   time, issuing commands for 300 µs from V-BLANK-IN is prohibited.
+
+  // CLKCHG320 (power-on default) NTSC, the FRC's internal clock is 26.8741 MHz.
+  // The possible periods are then:
+  //
+  //  - 0.29768 µs (/8)
+  //  - 1.19074 µs (/32)
+  //  - 4.76295 µs (/128)
+  //
+  // (1/(26.8741 MHz)) * 128 * 63 = 300.066 µs
+
+  // FRC, OCRA, OCRB, and FCIR are 16-bit registers, but the FRT bus is an 8-bit
+  // bus.
+
+  // TCR set CKS to /128
+  // TOCR set OCRS to OCRA
+  // TIER set OCIAE
+  // FTCSR set CCLRA (clear FRC on compare match A)
+  // VCRC set FOCV
+  // OCRA set 63
+  // FRC set 0
+
+  vec[0x60] = (u32)&oci_int;
+  sh2.reg.VCRC = VCRC__FOCV(0x60);
+
+  sh2.reg.TCR = TCR__CKS__INTERNAL_DIV128;
+  sh2.reg.TOCR = TOCR__OCRS__OCRA;
+  sh2.reg.FTCSR = FTCSR__CCLRA;
+  sh2.reg.OCRAB.H = 0;   // Even though Kronos doesn't emulate this, SH7095 says
+                        // we are required to write the upper bit prior to
+                        // writing the lower byte
+  sh2.reg.OCRAB.L = 63;
+  sh2.reg.FRC.H = 0;
+  sh2.reg.FRC.L = 0;
+
+  // enable output compare interrupt
+  sh2.reg.TIER = TIER__OCIAE;
+
+  // reset/enable interrupts
+
   scu.reg.IST = 0;
-  scu.reg.IMS = ~(IMS__TIMER0 | IMS__SMPC);
+  scu.reg.IMS = ~(IMS__SMPC);
 
   while (1) {
     vec[0] = scu.reg.IST;

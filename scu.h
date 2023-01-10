@@ -160,5 +160,3 @@ enum scu_vec {
 };
 
 static_assert(SCU_VEC__EXT15 == 0x5f);
-
-extern reg32 vec[0x60] __asm("vec");

@@ -10,11 +10,20 @@ typedef struct sh2_reg {
   reg8 _res0[10];
   reg8 TIER;     // 0x010
   reg8 FTCSR;    // 0x011
-  reg16 FRC;     // 0x012
-  reg16 OCRA_B;  // 0x014
+  struct {
+    reg8 H;      // 0x012
+    reg8 L;      // 0x013
+  } FRC;
+  struct {
+    reg8 H;      // 0x014
+    reg8 L;      // 0x015
+  } OCRAB;
   reg8 TCR;      // 0x016
   reg8 TOCR;     // 0x017
-  reg16 FICR;    // 0x018
+  struct {
+    reg8 H;      // 0x018
+    reg8 L;      // 0x018
+  } FICR;
   reg8 _res1[70];
   reg16 IPRB;    // 0x060
   reg16 VCRA;    // 0x062
@@ -87,7 +96,7 @@ typedef struct sh2_reg {
 } sh2_reg;
 
 static_assert((sizeof (struct sh2_reg)) == 0x200);
-static_assert((offsetof (struct sh2_reg, OCRA_B)) == 0x014);
+static_assert((offsetof (struct sh2_reg, OCRAB)) == 0x014);
 static_assert((offsetof (struct sh2_reg, BCR1)) == 0x1e0);
 
 struct sh2 {
@@ -95,3 +104,47 @@ struct sh2 {
 };
 
 extern struct sh2 sh2 __asm("sh2");
+
+extern reg32 vec[0xff] __asm("vec");
+
+enum tier_bits {
+  TIER__ICIE = (1 << 7),
+  TIER__OCIAE = (1 << 3),
+  TIER__OCIBE = (1 << 2),
+  TIER__OVIE = (1 << 1),
+};
+enum ftcsr_bits {
+  FTCSR__ICF = (1 << 7),
+  FTCSR__OCFA = (1 << 3),
+  FTCSR__OCFB = (1 << 2),
+  FTCSR__OVF = (1 << 1),
+  FTCSR__CCLRA = (1 << 0),
+};
+enum tcr_bits {
+  TCR__IEDGA__RISING_EDGE = (1 << 7),
+  TCR__CKS__INTERNAL_DIV8 = (0b00),
+  TCR__CKS__INTERNAL_DIV32 = (0b01),
+  TCR__CKS__INTERNAL_DIV128 = (0b10),
+  TCR__CKS__EXTERNAL_RISING = (0b11),
+};
+enum tocr_bits {
+  TOCR__OCRS__OCRA = (0 << 4),
+  TOCR__OCRS__OCRB = (1 << 4),
+  TOCR__OLVLA = (1 << 1),
+  TOCR__OLBLB = (1 << 0),
+};
+// enum vcra_bits {
+#define VCRA__SERV(n) (n << 8)
+#define VCRA__SRXV(n) (n << 0)
+// };
+// enum vcrb_bits {
+#define VCRB__STXV(n) (n << 8)
+#define VCRB__STEV(n) (n << 0)
+// };
+// enum vcrc_bits {
+#define VCRC__FICV(n) (n << 8) // input-capture interrupt vector number
+#define VCRC__FOCV(n) (n << 0) // output-compare interrupt vector number
+// };
+// enum vcrd_bits {
+#define VCRD__FOVV(n) (n << 8)
+// };
