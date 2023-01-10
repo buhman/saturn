@@ -1,6 +1,7 @@
-AFLAGS = -g -gdwarf-4 --isa=sh2 --big
+AARCH = --isa=sh2 --big
+AFLAGS = -g -gdwarf-4
 CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -g -gdwarf-4 -Og
+CFLAGS += -Wall -Werror -Wfatal-errors -g -gdwarf-4 -Og
 CARCH = -m2 -mb
 
 TARGET = sh2-none-elf-
@@ -25,21 +26,30 @@ SYS_IP_OBJ += sys_init.o
 SYS_IP_OBJ += smpsys.o
 
 %.o: %.s
-	$(AS) $(AFLAGS) $< -o $@
+	$(AS) $(AFLAGS) $(AARCH) $< -o $@
 
 %.o: %.S
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CARCH) -c $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CARCH) -c $< -o $@
 
-sys_ip.elf: $(SYS_IP_OBJ)
+%.elf:
 	$(LD) --print-memory-usage -T sys_ip.lds $^ -o $@
 
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
 
+%.bin.o: %.bin
+	$(OBJCOPY) \
+		-I binary -O elf32-sh -B sh \
+		--rename-section .data=.rodata,alloc,load,readonly,data,contents \
+		$< $@
+
+sys_ip.elf: $(SYS_IP_OBJ)
+
 MAIN_OBJ = main.o
+#m68k/main.bin.o
 
 main.elf: $(MAIN_OBJ)
 	$(LD) --print-memory-usage -T sh2.lds $^ -o $@
@@ -87,4 +97,4 @@ clean:
 .SUFFIXES:
 .INTERMEDIATE:
 .SECONDARY:
-.PHONY: all clean dump
+.PHONY: all clean
