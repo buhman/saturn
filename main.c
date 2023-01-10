@@ -19,6 +19,19 @@ void timer0_int(void)
   scu.reg.IST &= ~(IST__TIMER0);
 }
 
+void v_blank_in_int(void) __attribute__ ((interrupt_handler));
+void v_blank_in_int(void)
+{
+  scu.reg.IST &= ~(IST__V_BLANK_IN);
+
+  // reset FRC to zero
+  sh2.reg.FRC.H = 0;
+  sh2.reg.FRC.L = 0;
+
+  // enable output compare interrupt
+  sh2.reg.TIER = TIER__OCIAE;
+}
+
 void oci_int(void) __attribute__ ((interrupt_handler));
 void oci_int(void)
 {
@@ -37,14 +50,15 @@ void oci_int(void)
   smpc.reg.IREG2 = INTBACK__IREG2__MAGIC;
 
   smpc.reg.COMREG = COMREG__INTBACK;
+
+  // disable output compare interrupt (to be re-enabled on the next v_blank_in)
+  sh2.reg.TIER = 0;
 }
 
 void smpc_int(void) __attribute__ ((interrupt_handler));
 void smpc_int(void)
 {
   scu.reg.IST &= ~(IST__SMPC);
-
-
 
   smpc.reg.IREG0 = INTBACK__IREG0__BREAK;
 }
@@ -198,6 +212,7 @@ void start(void)
 
   vec[SCU_VEC__TIMER0] = (u32)(&timer0_int);
   vec[SCU_VEC__SMPC] = (u32)(&smpc_int);
+  vec[SCU_VEC__V_BLANK_IN] = (u32)(&v_blank_in_int);
   //scu.reg.T0C = 5;
   //scu.reg.T1MD = T1MD__TENB;
 
@@ -235,16 +250,10 @@ void start(void)
                         // we are required to write the upper bit prior to
                         // writing the lower byte
   sh2.reg.OCRAB.L = 63;
-  sh2.reg.FRC.H = 0;
-  sh2.reg.FRC.L = 0;
-
-  // enable output compare interrupt
-  sh2.reg.TIER = TIER__OCIAE;
 
   // reset/enable interrupts
-
   scu.reg.IST = 0;
-  scu.reg.IMS = ~(IMS__SMPC);
+  scu.reg.IMS = ~(IMS__SMPC | IMS__V_BLANK_IN);
 
   while (1) {
     vec[0] = scu.reg.IST;
