@@ -219,8 +219,9 @@ enum tvmd_bit {
 enum tvstat_bit {
   TVSTAT__VBLANK = (1 << 3),
 };
-// enum vrsize_bit {
-// };
+enum vrsize_bit {
+  VRSIZE__VRAMSZ = (1 << 15),
+};
 // enum hcnt_bit {
 // };
 // enum vcnt_bit {
@@ -292,7 +293,7 @@ enum chctla_bit {
   CHCTLA__N0BMSZ__1024x512_DOT = (0b11 << 2),
 
   CHCTLA__N0BMEN__CELL_FORMAT = (0 << 1),
-  CHCTLA__N0BMEN__BITMAP_FORMAT = (0 << 1),
+  CHCTLA__N0BMEN__BITMAP_FORMAT = (1 << 1),
 
   CHCTLA__N0CHSZ__1x1_CELL = (0 << 0),
   CHCTLA__N0CHSZ__2x2_CELL = (1 << 0),

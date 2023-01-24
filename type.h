@@ -9,13 +9,15 @@ static_assert((sizeof (reg8)) == 1);
 static_assert((sizeof (reg16)) == 2);
 static_assert((sizeof (reg32)) == 4);
 
-typedef volatile unsigned short u8;
-typedef volatile short s8;
-typedef volatile unsigned short u16;
-typedef volatile short s16;
-typedef volatile unsigned long u32;
-typedef volatile long s32;
+typedef unsigned char u8;
+typedef char s8;
+typedef unsigned short u16;
+typedef short s16;
+typedef unsigned long u32;
+typedef long s32;
 
+static_assert((sizeof (u8)) == 1);
+static_assert((sizeof (s8)) == 1);
 static_assert((sizeof (u16)) == 2);
 static_assert((sizeof (s16)) == 2);
 static_assert((sizeof (u32)) == 4);

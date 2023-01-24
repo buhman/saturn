@@ -35,6 +35,7 @@ SECTIONS
 }
 
 smpc = 0x00100000;
+cdb  = 0x05890000;
 scsp = 0x05A00000;
 vdp1 = 0x05C00000;
 vdp2 = 0x05E00000;

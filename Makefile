@@ -1,7 +1,7 @@
 AARCH = --isa=sh2 --big
 AFLAGS = -g -gdwarf-4
 CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -Wfatal-errors -g -gdwarf-4 -Og
+CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 -Og
 CARCH = -m2 -mb
 
 TARGET = sh2-none-elf-
@@ -48,8 +48,7 @@ SYS_IP_OBJ += smpsys.o
 
 sys_ip.elf: $(SYS_IP_OBJ)
 
-MAIN_OBJ = main.o
-#m68k/main.bin.o
+MAIN_OBJ = main.o cd.o m68k/main.bin.o
 
 main.elf: $(MAIN_OBJ)
 	$(LD) --print-memory-usage -T sh2.lds $^ -o $@
