@@ -9,7 +9,7 @@ SECTIONS
 {
   . = 0x06010000;
 
-  .text ALIGN(2) : SUBALIGN(2)
+  .text ALIGN(4) : SUBALIGN(4)
   {
     *(.text.start)
     *(.text*)
@@ -40,5 +40,5 @@ scsp = 0x05A00000;
 vdp1 = 0x05C00000;
 vdp2 = 0x05E00000;
 scu  = 0x05FE0000;
-vec  = 0x06000000;
+sh2_vec = 0x06000000;
 sh2  = 0xfffffe00;

@@ -105,7 +105,7 @@ struct sh2 {
 
 extern struct sh2 sh2 __asm("sh2");
 
-extern reg32 vec[0xff] __asm("vec");
+extern reg32 sh2_vec[0xff] __asm("sh2_vec");
 
 enum tier_bits {
   TIER__ICIE = (1 << 7),

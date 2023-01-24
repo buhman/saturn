@@ -1,4 +1,6 @@
+#ifndef __cplusplus
 #define static_assert _Static_assert
+#endif
 #define offsetof __builtin_offsetof
 
 typedef volatile unsigned char reg8;

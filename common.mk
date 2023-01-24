@@ -1,11 +1,16 @@
+LIB ?= .
+
 AARCH = --isa=sh2 --big
 AFLAGS = -g -gdwarf-4
+CFLAGS = -I$(LIB)
 CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 -Og
+CXXFLAGS = -fno-exceptions -fno-rtti
 CARCH = -m2 -mb
 
 TARGET = sh2-none-elf-
 CC = $(TARGET)gcc
+CXX = $(TARGET)g++
 AS = $(TARGET)as
 LD = $(TARGET)ld
 OBJCOPY = $(TARGET)objcopy
@@ -13,17 +18,17 @@ OBJDUMP = $(TARGET)objdump
 
 all: main.iso
 
-sys_%.o: segasmp/lib/sys_%.o
+$(LIB)/sys_%.o: $(LIB)/segasmp/lib/sys_%.o
 	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
 		--rename-section .text=.text.$* \
 		$< $@
 
-SYS_IP_OBJ += sys_id.o
-SYS_IP_OBJ += sys_sec.o
-SYS_IP_OBJ += sys_area.o sys_areb.o sys_aree.o sys_arej.o
-SYS_IP_OBJ += sys_arek.o sys_arel.o sys_aret.o sys_areu.o
-SYS_IP_OBJ += sys_init.o
-SYS_IP_OBJ += smpsys.o
+SYS_IP_OBJ += $(LIB)/sys_id.o
+SYS_IP_OBJ += $(LIB)/sys_sec.o
+SYS_IP_OBJ += $(LIB)/sys_area.o $(LIB)/sys_areb.o $(LIB)/sys_aree.o $(LIB)/sys_arej.o
+SYS_IP_OBJ += $(LIB)/sys_arek.o $(LIB)/sys_arel.o $(LIB)/sys_aret.o $(LIB)/sys_areu.o
+SYS_IP_OBJ += $(LIB)/sys_init.o
+SYS_IP_OBJ += $(LIB)/smpsys.o
 
 %.o: %.s
 	$(AS) $(AFLAGS) $(AARCH) $< -o $@
@@ -34,8 +39,11 @@ SYS_IP_OBJ += smpsys.o
 %.o: %.c
 	$(CC) $(CFLAGS) $(CARCH) -c $< -o $@
 
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $(CXXFLAGS) $(CARCH) -c $< -o $@
+
 %.elf:
-	$(LD) --print-memory-usage -T sys_ip.lds $^ -o $@
+	$(LD) --print-memory-usage -T $(LIB)/sys_ip.lds $^ -o $@
 
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
@@ -48,10 +56,9 @@ SYS_IP_OBJ += smpsys.o
 
 sys_ip.elf: $(SYS_IP_OBJ)
 
-MAIN_OBJ = main.o cd.o m68k/main.bin.o
-
 main.elf: $(MAIN_OBJ)
-	$(LD) --print-memory-usage -T sh2.lds $^ -o $@
+	$(LD) --print-memory-usage \
+	-T $(LIB)/sh2.lds $^ -o $@
 
 # mkisofs sorts file names alphabetically, it does not place the files in the
 # generated directory descriptors the order given on the command-line.
@@ -86,9 +93,9 @@ main.iso: main.bin sys_ip.bin
 		-o $@ \
 		-graft-points \
 		/0main.bin=./main.bin \
-		/=./segasmp/smp_cpy.txt \
-		/=./segasmp/smp_abs.txt \
-		/=./segasmp/smp_bib.txt
+		/=$(LIB)/segasmp/smp_cpy.txt \
+		/=$(LIB)/segasmp/smp_abs.txt \
+		/=$(LIB)/segasmp/smp_bib.txt
 
 clean:
 	rm -f *.iso *.o *.bin *.elf
