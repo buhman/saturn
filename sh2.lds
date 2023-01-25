@@ -13,6 +13,7 @@ SECTIONS
   {
     *(.text.start)
     *(.text*)
+    *(.text.*)
   } > work_ram_h
 
   .data ALIGN(4) : SUBALIGN(4)
@@ -34,11 +35,11 @@ SECTIONS
   __bss_link_end = ADDR(.bss) + SIZEOF(.bss);
 }
 
-smpc = 0x00100000;
-cdb  = 0x05890000;
-scsp = 0x05A00000;
-vdp1 = 0x05C00000;
-vdp2 = 0x05E00000;
-scu  = 0x05FE0000;
-sh2_vec = 0x06000000;
+smpc = 0x20100000;
+cdb  = 0x25890000;
+scsp = 0x25A00000;
+vdp1 = 0x25C00000;
+vdp2 = 0x25E00000;
+scu  = 0x25FE0000;
+sh2_vec = 0x26000000;
 sh2  = 0xfffffe00;
