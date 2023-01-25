@@ -1,3 +1,5 @@
+#pragma once
+
 #include "type.h"
 
 typedef struct sh2_reg {
@@ -98,6 +100,7 @@ typedef struct sh2_reg {
 static_assert((sizeof (struct sh2_reg)) == 0x200);
 static_assert((offsetof (struct sh2_reg, OCRAB)) == 0x014);
 static_assert((offsetof (struct sh2_reg, BCR1)) == 0x1e0);
+static_assert((offsetof (struct sh2_reg, DVSR)) == 0x100);
 
 struct sh2 {
   sh2_reg reg;

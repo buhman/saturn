@@ -1,10 +1,10 @@
 LIB ?= .
+OPT ?= -Og
 
 AARCH = --isa=sh2 --big
 AFLAGS = -g -gdwarf-4
-CFLAGS = -I$(LIB)
 CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 -Og
+CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
 CXXFLAGS = -fno-exceptions -fno-rtti
 CARCH = -m2 -mb
 
@@ -15,8 +15,6 @@ AS = $(TARGET)as
 LD = $(TARGET)ld
 OBJCOPY = $(TARGET)objcopy
 OBJDUMP = $(TARGET)objdump
-
-all: main.iso
 
 $(LIB)/sys_%.o: $(LIB)/segasmp/lib/sys_%.o
 	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
@@ -42,9 +40,6 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $(CXXFLAGS) $(CARCH) -c $< -o $@
 
-%.elf:
-	$(LD) --print-memory-usage -T $(LIB)/sys_ip.lds $^ -o $@
-
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
 
@@ -54,11 +49,11 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 		--rename-section .data=.rodata,alloc,load,readonly,data,contents \
 		$< $@
 
-sys_ip.elf: $(SYS_IP_OBJ)
+%.elf:
+	$(LD) --print-memory-usage -T $(LIB)/sh2.lds $^ -o $@
 
-main.elf: $(MAIN_OBJ)
-	$(LD) --print-memory-usage \
-	-T $(LIB)/sh2.lds $^ -o $@
+sys_ip.elf: $(SYS_IP_OBJ)
+	$(LD) --print-memory-usage -T $(LIB)/sys_ip.lds $^ -o $@
 
 # mkisofs sorts file names alphabetically, it does not place the files in the
 # generated directory descriptors the order given on the command-line.
@@ -78,7 +73,7 @@ main.elf: $(MAIN_OBJ)
 # that do check this).
 #
 # `-graft-points` is used to enable the "path grafting" pathspec syntax.
-main.iso: main.bin sys_ip.bin
+%.iso: %.bin sys_ip.bin
 	mkisofs \
 		-sysid "SEGA SEGASATURN" \
 		-volid "SAMPLE_GAME_TITLE" \
@@ -92,10 +87,15 @@ main.iso: main.bin sys_ip.bin
 		-G sys_ip.bin \
 		-o $@ \
 		-graft-points \
-		/0main.bin=./main.bin \
+		/0${<}=./${<} \
 		/=$(LIB)/segasmp/smp_cpy.txt \
 		/=$(LIB)/segasmp/smp_abs.txt \
 		/=$(LIB)/segasmp/smp_bib.txt
+
+%.cue: %.iso
+	@echo "FILE \"${<}\" BINARY" > $@
+	@echo "  TRACK 01 MODE1/2048" >> $@
+	@echo "    INDEX 01 00:00:00" >> $@
 
 clean:
 	rm -f *.iso *.o *.bin *.elf
