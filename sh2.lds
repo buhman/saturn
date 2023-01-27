@@ -12,13 +12,14 @@ SECTIONS
   .text ALIGN(4) : SUBALIGN(4)
   {
     *(.text.start)
-    *(.text*)
+    *(.text)
     *(.text.*)
   } > work_ram_h
 
   .data ALIGN(4) : SUBALIGN(4)
   {
     *(.data)
+    *(.data.*)
   } > work_ram_h
 
   .rodata ALIGN(4) : SUBALIGN(4)

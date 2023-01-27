@@ -231,8 +231,14 @@ enum vrsize_bit {
 // };
 // enum vcnt_bit {
 // };
-// enum ramctl_bit {
-// };
+enum ramctl_bit {
+  RAMCTL__CRKTE = (1 << 15),
+  RAMCTL__VRBMD = (1 << 9),
+  RAMCTL__VRAMD = (1 << 8),
+  RAMCTL__CRMD__RGB_5BIT_1024 = (0b00 << 12),
+  RAMCTL__CRMD__RGB_5BIT_2048 = (0b01 << 12),
+  RAMCTL__CRMD__RGB_8BIT_1024 = (0b10 << 12)
+};
 // enum cyca0l_bit {
 // };
 // enum cyca0u_bit {
@@ -272,7 +278,7 @@ enum bgon_bit {
 enum chctla_bit {
   CHCTLA__N1CHCN__16_COLOR = (0b00 << 12),
   CHCTLA__N1CHCN__256_COLOR = (0b00 << 12),
-  CHCTLA__N1CHCN__2K_COLOR = (0b00 << 12),
+  CHCTLA__N1CHCN__2048_COLOR = (0b00 << 12),
   CHCTLA__N1CHCN__32K_COLOR = (0b00 << 12),
 
   CHCTLA__N1BMSZ__512x256_DOT = (0b00 << 10),
@@ -288,7 +294,7 @@ enum chctla_bit {
 
   CHCTLA__N0CHCN__16_COLOR = (0b000 << 4),
   CHCTLA__N0CHCN__256_COLOR = (0b001 << 4),
-  CHCTLA__N0CHCN__2K_COLOR = (0b010 << 4),
+  CHCTLA__N0CHCN__2048_COLOR = (0b010 << 4),
   CHCTLA__N0CHCN__32K_COLOR = (0b011 << 4),
   CHCTLA__N0CHCN__16M_COLOR = (0b100 << 4),
 
@@ -306,7 +312,7 @@ enum chctla_bit {
 enum chctlb_bit {
   CHCTLB__R0CHCN__16_COLOR = (0b000 << 12),
   CHCTLB__R0CHCN__256_COLOR = (0b001 << 12),
-  CHCTLB__R0CHCN__2K_COLOR = (0b010 << 12),
+  CHCTLB__R0CHCN__2048_COLOR = (0b010 << 12),
   CHCTLB__R0CHCN__32K_COLOR = (0b011 << 12),
   CHCTLB__R0CHCN__16M_COLOR = (0b100 << 12),
 

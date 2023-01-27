@@ -50,7 +50,7 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 		$< $@
 
 %.elf:
-	$(LD) --print-memory-usage -T $(LIB)/sh2.lds $^ -o $@
+	$(LD) --no-warn-rwx-segment --print-memory-usage -T $(LIB)/sh2.lds $^ -o $@
 
 sys_ip.elf: $(SYS_IP_OBJ)
 	$(LD) --print-memory-usage -T $(LIB)/sys_ip.lds $^ -o $@
