@@ -3,8 +3,9 @@ OPT ?= -Og
 
 AARCH = --isa=sh2 --big
 AFLAGS = -g -gdwarf-4
-CFLAGS += -ffunction-sections -fshort-enums -ffreestanding -nostdlib
+CFLAGS += -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
+LDFLAGS = --gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start
 CXXFLAGS = -fno-exceptions -fno-rtti
 CARCH = -m2 -mb
 
@@ -50,7 +51,7 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 		$< $@
 
 %.elf:
-	$(LD) --no-warn-rwx-segment --print-memory-usage -T $(LIB)/sh2.lds $^ -o $@
+	$(LD) $(LDFLAGS) -T $(LIB)/sh2.lds $^ -o $@
 
 sys_ip.elf: $(SYS_IP_OBJ)
 	$(LD) --print-memory-usage -T $(LIB)/sys_ip.lds $^ -o $@
@@ -87,7 +88,7 @@ sys_ip.elf: $(SYS_IP_OBJ)
 		-G sys_ip.bin \
 		-o $@ \
 		-graft-points \
-		/0${<}=./${<} \
+		/0$(notdir ${<})=./${<} \
 		/=$(LIB)/segasmp/smp_cpy.txt \
 		/=$(LIB)/segasmp/smp_abs.txt \
 		/=$(LIB)/segasmp/smp_bib.txt

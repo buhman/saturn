@@ -11,7 +11,7 @@ SECTIONS
 
   .text ALIGN(4) : SUBALIGN(4)
   {
-    *(.text.start)
+    KEEP(*(.text.start))
     *(.text)
     *(.text.*)
   } > work_ram_h
