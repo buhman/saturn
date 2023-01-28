@@ -622,12 +622,20 @@ enum bktau_bit {
 // enum sfccmd_bit {
 // };
 // enum prisa_bit {
+#define PRISA__S1PRIN(n) (n << 8)
+#define PRISA__S0PRIN(n) (n << 0)
 // };
 // enum prisb_bit {
+#define PRISA__S3PRIN(n) (n << 8)
+#define PRISA__S2PRIN(n) (n << 0)
 // };
 // enum prisc_bit {
+#define PRISA__S5PRIN(n) (n << 8)
+#define PRISA__S4PRIN(n) (n << 0)
 // };
 // enum prisd_bit {
+#define PRISA__S7PRIN(n) (n << 8)
+#define PRISA__S6PRIN(n) (n << 0)
 // };
 // enum prina_bit {
 // };

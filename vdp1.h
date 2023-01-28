@@ -65,16 +65,20 @@ enum ctrl_bit {
 };
 
 enum pmod_bit {
-  CTRL__PMOD__MON = (1 << 15),
-  CTRL__PMOD__HSS = (1 << 12),
-  CTRL__PMOD__PCLP = (1 << 11),
-  CTRL__PMOD__CLIP = (1 << 10),
-  CTRL__PMOD__CMOD = (1 << 9),
-  CTRL__PMOD__MESH = (1 << 8),
-  CTRL__PMOD__ECD = (1 << 7),
-  CTRL__PMOD__SPD = (1 << 6),
-#define CTRL__PMOD__COLOR_MODE ( << 3)
-#define CTRL__PMOD__COLOR_CALCULATION ( << 0)
+  PMOD__MON = (1 << 15),
+  PMOD__HSS = (1 << 12),
+  PMOD__PCLP = (1 << 11),
+  PMOD__CLIP = (1 << 10),
+  PMOD__CMOD = (1 << 9),
+  PMOD__MESH = (1 << 8),
+  PMOD__ECD = (1 << 7),
+  PMOD__SPD = (1 << 6),
+#define PMOD__COLOR_MODE ( << 3)
+#define PMOD__COLOR_CALCULATION ( << 0)
+};
+
+enum colr_bit {
+  COLR__RGB = (1 << 15)
 };
 
 /* memory offsets */
@@ -135,12 +139,11 @@ extern struct vdp1 vdp1 __asm("vdp1");
 
 enum tvmr_bit {
   TVMR__VBE = (1 << 3),
-  TVMR__TVM__NTSC_PAL = (0 << 2),
-  TVMR__TVM__HDTV_31KC = (1 << 2),
-  TVMR__TVM__FRAMEBUFFER_NONROTATION = (0 << 1),
-  TVMR__TVM__FRAMEBUFFER_ROTATION = (1 << 1),
-  TVMR__TVM__16BPP = (0 << 0),
-  TVMR__TVM__8BPP = (1 << 0),
+  TVMR__TVM__NORMAL = (0b000 << 0),
+  TVMR__TVM__HIGH_RESOLUTION = (0b001 << 0),
+  TVMR__TVM__ROTATION_16 = (0b010 << 0),
+  TVMR__TVM__ROTATION_8 = (0b011 << 0),
+  TVMR__TVM__HDTV = (0b100 << 0),
 };
 
 enum fbcr_bit {
@@ -158,13 +161,13 @@ enum ptmr_bit {
 };
 
 // enum ewlr_bit {
-#define PTMR__EWLR__16BPP_X1(n) ((n / 8 ) << 9)
-#define PTMR__EWLR__8BPP_X1(n)  ((n / 16) << 9)
-#define PTMR__EWLR__Y1(n) (n << 0)
+#define EWLR__16BPP_X1(n) ((n / 8 ) << 9)
+#define EWLR__8BPP_X1(n)  ((n / 16) << 9)
+#define EWLR__Y1(n) (n << 0)
 // }
 
 // enum ewrr_bit {
-#define PTMR__EWRR__16BPP_X3(n) (((n + 1) / 8 ) << 9)
-#define PTMR__EWLR__8BPP_X3(n)  (((n + 1) / 16) << 9)
-#define PTMR__EWRR__Y3(n) (n << 0)
+#define EWRR__16BPP_X3(n) (((n + 1) / 8 ) << 9)
+#define EWLR__8BPP_X3(n)  (((n + 1) / 16) << 9)
+#define EWRR__Y3(n) (n << 0)
 // }
