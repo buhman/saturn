@@ -85,11 +85,16 @@ enum pmod_bit {
 
 enum colr_bit {
   COLR__RGB = (1 << 15)
+#define COLR__ADDRESS(n) (n >> 3)
 };
 
+//enum srca_bit {
+#define SRCA(n) ((n) >> 3)
+//};
+
 //enum size_bit {
-#define SIZE__Y(n) (n << 0)
-#define SIZE__X(n) ((n >> 2) << 7)
+#define SIZE__Y(n) ((n) << 0)
+#define SIZE__X(n) (((n) >> 2) << 7)
 //};
 
 /* memory offsets */
