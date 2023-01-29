@@ -144,14 +144,14 @@ enum slot_bits {
 };
 
 enum eg_bits {
-  EG__D2R    = (0b00000 << 27), // Decay 2 rate
-  EG__D1R    = (0b00000 << 22), // Decay 1 rate
-  EG__EGHOLD = (      1 << 21), // (HO) EG hold mode
-  EG__AR     = (0b00000 << 16), // Attack rate
-  EG__LPSLNK = (      1 << 14), // (LS) Loop start link
-  EG__KRS    = ( 0b0000 << 10), // Key rate scaling
-  EG__DL     = (0b00000 << 5 ), // Decay level
-  EG__RR     = (0b00000 << 0 ), // Release rate
+#define EG__D2R(n) ((n & 0x1f) << 27), // Decay 2 rate
+#define EG__D1R(n) ((n & 0x1f) << 22), // Decay 1 rate
+        EG__EGHOLD = (       1 << 21), // (HO) EG hold mode
+#define EG__AR(n)  ((n & 0x1f) << 16), // Attack rate
+        EG__LPSLNK = (       1 << 14), // (LS) Loop start link
+#define EG__KRS(n) ((n & 0xf ) << 10), // Key rate scaling
+#define EG__DL(n)  ((n & 0x1f) << 5 ), // Decay level
+#define EG__RR(n)  ((n & 0x1f) << 0 ), // Release rate
 };
 
 enum volume_bits {
