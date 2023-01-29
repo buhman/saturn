@@ -73,13 +73,24 @@ enum pmod_bit {
   PMOD__MESH = (1 << 8),
   PMOD__ECD = (1 << 7),
   PMOD__SPD = (1 << 6),
-#define PMOD__COLOR_MODE ( << 3)
+#define PMOD__COLOR_MODE__COLOR_BANK_16   (0b000 << 3)
+#define PMOD__COLOR_MODE__LOOKUP_TABLE_16 (0b001 << 3)
+#define PMOD__COLOR_MODE__COLOR_BANK_64   (0b010 << 3)
+#define PMOD__COLOR_MODE__COLOR_BANK_128  (0b011 << 3)
+#define PMOD__COLOR_MODE__COLOR_BANK_256  (0b100 << 3)
+#define PMOD__COLOR_MODE__RGB             (0b101 << 3)
+
 #define PMOD__COLOR_CALCULATION ( << 0)
 };
 
 enum colr_bit {
   COLR__RGB = (1 << 15)
 };
+
+//enum size_bit {
+#define SIZE__Y(n) (n << 0)
+#define SIZE__X(n) ((n >> 2) << 7)
+//};
 
 /* memory offsets */
 
