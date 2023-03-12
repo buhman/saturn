@@ -3,7 +3,7 @@ OPT ?= -Og
 
 AARCH = --isa=sh2 --big
 AFLAGS = -g -gdwarf-4
-CFLAGS += -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
+CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
 LDFLAGS = --gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start
 CXXFLAGS = -fno-exceptions -fno-rtti
@@ -94,7 +94,7 @@ sys_ip.elf: $(SYS_IP_OBJ)
 		/=$(LIB)/segasmp/smp_bib.txt
 
 %.cue: %.iso
-	@echo "FILE \"${<}\" BINARY" > $@
+	@echo "FILE \"$(notdir ${<})\" BINARY" > $@
 	@echo "  TRACK 01 MODE1/2048" >> $@
 	@echo "    INDEX 01 00:00:00" >> $@
 

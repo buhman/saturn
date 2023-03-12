@@ -94,7 +94,7 @@ enum colr_bit {
 
 //enum size_bit {
 #define SIZE__Y(n) ((n) << 0)
-#define SIZE__X(n) (((n) >> 2) << 7)
+#define SIZE__X(n) (((n) >> 3) << 8)
 //};
 
 /* memory offsets */
