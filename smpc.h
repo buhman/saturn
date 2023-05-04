@@ -133,6 +133,7 @@ typedef struct smpc_reg {
 
 static_assert((sizeof (struct smpc_reg)) == 0x80);
 static_assert((offsetof (struct smpc_reg, OREG0)) == 0x21);
+static_assert((offsetof (struct smpc_reg, OREG1)) == 0x23);
 static_assert((offsetof (struct smpc_reg, SF)) == 0x63);
 
 struct smpc {
@@ -197,6 +198,17 @@ enum sr_bit {
 #define SR__P1MD__255BYTE(sr) (((sr & 0b00000011)) == (0b01 << 0))
 #define SR__P1MD__0BYTE(sr) (((sr & 0b00000011)) == (0b11 << 0))
 };
+
+//enum port_status {
+#define PORT_STATUS__CONNECTORS(oreg) ((oreg >> 0) & 0b1111)
+#define PORT_STATUS__MULTITAP_ID(oreg) ((oreg >> 4) & 0b1111)
+//}
+
+//enum peripheral_id {
+#define PERIPHERAL_ID__DATA_SIZE(oreg) ((oreg >> 0) & 0b1111)
+#define PERIPHERAL_ID__IS_DIGITAL_PAD(oreg) (((oreg >> 4) & 0b1111) == 0b0000)
+//}
+
 
 enum digital_bit {
   DIGITAL__1__RIGHT = (1 << 7),
