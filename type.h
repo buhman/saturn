@@ -1,22 +1,24 @@
+#include <stdint.h>
+
 #ifndef __cplusplus
 #define static_assert _Static_assert
 #endif
 #define offsetof __builtin_offsetof
 
-typedef volatile unsigned char reg8;
-typedef volatile unsigned short reg16;
-typedef volatile unsigned long reg32;
+typedef volatile uint8_t reg8;
+typedef volatile uint16_t reg16;
+typedef volatile uint32_t reg32;
 
 static_assert((sizeof (reg8)) == 1);
 static_assert((sizeof (reg16)) == 2);
 static_assert((sizeof (reg32)) == 4);
 
-typedef unsigned char u8;
-typedef char s8;
-typedef unsigned short u16;
-typedef short s16;
-typedef unsigned long u32;
-typedef long s32;
+typedef uint8_t u8;
+typedef int8_t s8;
+typedef uint16_t u16;
+typedef int16_t s16;
+typedef uint32_t u32;
+typedef int32_t s32;
 
 static_assert((sizeof (u8)) == 1);
 static_assert((sizeof (s8)) == 1);

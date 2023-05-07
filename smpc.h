@@ -1,6 +1,6 @@
 #include "type.h"
 
-typedef struct smpc_reg {
+struct ireg {
   reg8 _res0;
   reg8 IREG0;
   reg8 _res1;
@@ -15,24 +15,29 @@ typedef struct smpc_reg {
   reg8 IREG5;
   reg8 _res6;
   reg8 IREG6;
-  reg8 _res7;
-  reg8 _res8;
-  reg8 _res9;
-  reg8 _res10;
-  reg8 _res11;
-  reg8 _res12;
-  reg8 _res13;
-  reg8 _res14;
-  reg8 _res15;
-  reg8 _res16;
-  reg8 _res17;
-  reg8 _res18;
-  reg8 _res19;
-  reg8 _res20;
-  reg8 _res21;
-  reg8 _res22;
-  reg8 _res23;
-  reg8 COMREG;
+
+  inline constexpr reg8 & operator[](uint32_t i)
+  {
+    switch (i) {
+    default:
+    case 0:  return IREG0;
+    case 1:  return IREG1;
+    case 2:  return IREG2;
+    case 3:  return IREG3;
+    case 4:  return IREG4;
+    case 5:  return IREG5;
+    case 6:  return IREG6;
+    }
+  };
+};
+
+static_assert((sizeof (struct ireg)) == 14);
+static_assert((offsetof (struct ireg, IREG0)) == 0x1);
+static_assert((offsetof (struct ireg, IREG1)) == 0x3);
+static_assert((offsetof (struct ireg, IREG6)) == 0xd);
+
+
+struct oreg {
   reg8 _res24;
   reg8 OREG0;
   reg8 _res25;
@@ -97,6 +102,72 @@ typedef struct smpc_reg {
   reg8 OREG30;
   reg8 _res55;
   reg8 OREG31;
+
+  inline constexpr reg8 const& operator[](uint32_t i) const
+  {
+    switch (i) {
+    default:
+    case 0:  return OREG0;
+    case 1:  return OREG1;
+    case 2:  return OREG2;
+    case 3:  return OREG3;
+    case 4:  return OREG4;
+    case 5:  return OREG5;
+    case 6:  return OREG6;
+    case 7:  return OREG7;
+    case 8:  return OREG8;
+    case 9:  return OREG9;
+    case 10: return OREG10;
+    case 11: return OREG11;
+    case 12: return OREG12;
+    case 13: return OREG13;
+    case 14: return OREG14;
+    case 15: return OREG15;
+    case 16: return OREG16;
+    case 17: return OREG17;
+    case 18: return OREG18;
+    case 19: return OREG19;
+    case 20: return OREG20;
+    case 21: return OREG21;
+    case 22: return OREG22;
+    case 23: return OREG23;
+    case 24: return OREG24;
+    case 25: return OREG25;
+    case 26: return OREG26;
+    case 27: return OREG27;
+    case 28: return OREG28;
+    case 29: return OREG29;
+    case 30: return OREG30;
+    case 31: return OREG31;
+    }
+  };
+};
+
+static_assert((sizeof (struct oreg)) == 64);
+static_assert((offsetof (struct oreg, OREG0)) == 0x1);
+static_assert((offsetof (struct oreg, OREG1)) == 0x3);
+
+struct smpc_reg {
+  struct ireg ireg;
+  reg8 _res7;
+  reg8 _res8;
+  reg8 _res9;
+  reg8 _res10;
+  reg8 _res11;
+  reg8 _res12;
+  reg8 _res13;
+  reg8 _res14;
+  reg8 _res15;
+  reg8 _res16;
+  reg8 _res17;
+  reg8 _res18;
+  reg8 _res19;
+  reg8 _res20;
+  reg8 _res21;
+  reg8 _res22;
+  reg8 _res23;
+  reg8 COMREG;
+  struct oreg oreg;
   reg8 _res56;
   reg8 SR;
   reg8 _res57;
@@ -129,11 +200,12 @@ typedef struct smpc_reg {
   reg8 IOSEL;
   reg8 _res79;
   reg8 EXLE;
-} smpc_reg;
+};
 
-static_assert((sizeof (struct smpc_reg)) == 0x80);
-static_assert((offsetof (struct smpc_reg, OREG0)) == 0x21);
-static_assert((offsetof (struct smpc_reg, OREG1)) == 0x23);
+static_assert((sizeof (smpc_reg)) == 0x80);
+static_assert((offsetof (struct smpc_reg, oreg.OREG0)) == 0x21);
+static_assert((offsetof (struct smpc_reg, oreg.OREG1)) == 0x23);
+static_assert((offsetof (struct smpc_reg, oreg.OREG31)) == 0x5f);
 static_assert((offsetof (struct smpc_reg, SF)) == 0x63);
 
 struct smpc {
