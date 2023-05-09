@@ -278,7 +278,7 @@ enum sr_bit {
 
 //enum peripheral_id {
 #define PERIPHERAL_ID__DATA_SIZE(oreg) ((oreg >> 0) & 0b1111)
-#define PERIPHERAL_ID__IS_DIGITAL_PAD(oreg) (((oreg >> 4) & 0b1111) == 0b0000)
+#define PERIPHERAL_ID__TYPE(oreg) ((oreg >> 4) & 0b1111)
 //}
 
 
