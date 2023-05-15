@@ -45,6 +45,7 @@ typedef struct scsp_slot {
 } scsp_slot;
 
 static_assert((sizeof (struct scsp_slot)) == 0x20);
+static_assert((offsetof (struct scsp_slot, MIXER)) == 0x14);
 
 // Formal register names are poorly documented; these are as faithfully as
 // possible derived from "4.2 Sound Source Register"
@@ -136,10 +137,13 @@ static_assert((offsetof (struct scsp, reg)) == 0x100000);
 enum slot_bits {
   LOOP__KYONEX = (    1 << 12), // (KX) execute KEY_ON
   LOOP__KYONB = (     1 << 11), // (KB) record KEY_ON, KEY_OFF
-  LOOP__SBCTL = (  0b00 << 10), // source bit control
-  LOOP__SSCTL = (  0b00 << 8 ), // sound source control
-  LOOP__LPCTL = (  0b00 << 6 ), // loop control
-  LOOP__PCM8B = (     1 << 5 ), // (8B) 8bit signed PCM
+  LOOP__SBCTL = (  0b00 << 9), // source bit control
+  LOOP__SSCTL = (  0b00 << 7 ), // sound source control
+  LOOP__LPCTL__OFF         = (  0b00 << 5 ), // loop control
+  LOOP__LPCTL__NORMAL      = (  0b01 << 5 ), // loop control
+  LOOP__LPCTL__REVERSE     = (  0b10 << 5 ), // loop control
+  LOOP__LPCTL__ALTERNATIVE = (  0b11 << 5 ), // loop control
+  LOOP__PCM8B = (     1 << 4 ), // (8B) 8bit signed PCM
   LOOP__SA =    (0b0000 << 0 ), // start address
 };
 
@@ -178,7 +182,7 @@ enum lfo_bits {
 enum mixer_bits {
   MIXER__ISEL  = ( 0b0000 << 19),
   MIXER__IMXL  = (  0b000 << 16),
-  MIXER__DISDL = (  0b000 << 13),
+#define MIXER__DISDL(n) (((n) & 0b111) << 13)
   MIXER__DIPAN = (0b00000 << 8 ),
   MIXER__EFSDL = (  0b000 << 5 ),
   MIXER__EFPAN = (0b00000 << 0 ),
