@@ -10,12 +10,15 @@ SECTIONS
   {
     . = 0x000000;
     KEEP(*(.vectors))
+    KEEP(*(.text.start))    
     *(.text)
+    *(.text.*)    
   } > sound_ram
 
   .data ALIGN(4) : SUBALIGN(4)
   {
     *(.data)
+    *(.data.*)    
   } > sound_ram
 
   .rodata ALIGN(4) : SUBALIGN(4)

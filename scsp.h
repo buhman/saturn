@@ -134,7 +134,7 @@ static_assert((offsetof (struct scsp, reg)) == 0x100000);
 
 // bits
 
-enum slot_bits {
+enum loop_bits {
   LOOP__KYONEX = (    1 << 12), // (KX) execute KEY_ON
   LOOP__KYONB = (     1 << 11), // (KB) record KEY_ON, KEY_OFF
   LOOP__SBCTL = (  0b00 << 9), // source bit control
@@ -144,7 +144,11 @@ enum slot_bits {
   LOOP__LPCTL__REVERSE     = (  0b10 << 5 ), // loop control
   LOOP__LPCTL__ALTERNATIVE = (  0b11 << 5 ), // loop control
   LOOP__PCM8B = (     1 << 4 ), // (8B) 8bit signed PCM
-  LOOP__SA =    (0b0000 << 0 ), // start address
+#define LOOP__SA(n) ((((n) >> 16) & 0b1111) << 0) // start address
+};
+
+enum sa_bits {
+#define SA__SA(n) ((n) & 0xffff)
 };
 
 enum eg_bits {

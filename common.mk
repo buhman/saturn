@@ -3,11 +3,12 @@ OPT ?= -Og
 
 AARCH = --isa=sh2 --big
 AFLAGS = -g -gdwarf-4
+
+CARCH = -m2 -mb
 CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
 LDFLAGS = --gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start
 CXXFLAGS = -fno-exceptions -fno-rtti
-CARCH = -m2 -mb
 
 TARGET = sh2-none-elf-
 CC = $(TARGET)gcc
@@ -16,6 +17,13 @@ AS = $(TARGET)as
 LD = $(TARGET)ld
 OBJCOPY = $(TARGET)objcopy
 OBJDUMP = $(TARGET)objdump
+
+define BUILD_BINARY_O
+	$(OBJCOPY) \
+		-I binary -O elf32-sh -B sh2 \
+		--rename-section .data=.data.$(basename $@) \
+		$< $@
+endef
 
 $(LIB)/sys_%.o: $(LIB)/segasmp/lib/sys_%.o
 	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
@@ -41,6 +49,9 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $(CXXFLAGS) $(CARCH) -c $< -o $@
 
+%.elf:
+	$(LD) $(LDFLAGS) -T $(LIB)/sh2.lds $^ -o $@
+
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
 
@@ -49,9 +60,6 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 		-I binary -O elf32-sh -B sh \
 		--rename-section .data=.rodata,alloc,load,readonly,data,contents \
 		$< $@
-
-%.elf:
-	$(LD) $(LDFLAGS) -T $(LIB)/sh2.lds $^ -o $@
 
 sys_ip.elf: $(SYS_IP_OBJ)
 	$(LD) --print-memory-usage -T $(LIB)/sys_ip.lds $^ -o $@
