@@ -148,14 +148,14 @@ enum slot_bits {
 };
 
 enum eg_bits {
-#define EG__D2R(n) ((n & 0x1f) << 27), // Decay 2 rate
-#define EG__D1R(n) ((n & 0x1f) << 22), // Decay 1 rate
+#define EG__D2R(n) ((n & 0x1f) << 27)  // Decay 2 rate
+#define EG__D1R(n) ((n & 0x1f) << 22)  // Decay 1 rate
         EG__EGHOLD = (       1 << 21), // (HO) EG hold mode
-#define EG__AR(n)  ((n & 0x1f) << 16), // Attack rate
+#define EG__AR(n)  ((n & 0x1f) << 16)  // Attack rate
         EG__LPSLNK = (       1 << 14), // (LS) Loop start link
-#define EG__KRS(n) ((n & 0xf ) << 10), // Key rate scaling
-#define EG__DL(n)  ((n & 0x1f) << 5 ), // Decay level
-#define EG__RR(n)  ((n & 0x1f) << 0 ), // Release rate
+#define EG__KRS(n) ((n & 0xf ) << 10)  // Key rate scaling
+#define EG__DL(n)  ((n & 0x1f) << 5 )  // Decay level
+#define EG__RR(n)  ((n & 0x1f) << 0 )  // Release rate
 };
 
 enum volume_bits {
@@ -198,3 +198,14 @@ enum scsp_bits {
   MIXER__DAC18B = (1 << 8),
 #define MIXER__MVOL(n) ((n) << 0)
 };
+
+// timer bits
+
+//enum tima_bits {
+#define TIMA__TACTL(n) ((n & 0b111) << 8)
+#define TIMB__TBCTL(n) ((n & 0b111) << 8)
+#define TIMC__TCCTL(n) ((n & 0b111) << 8)
+#define TIMA__TIMA(n) ((n & 0xff) << 0)
+#define TIMB__TIMB(n) ((n & 0xff) << 0)
+#define TIMC__TIMC(n) ((n & 0xff) << 0)
+//};
