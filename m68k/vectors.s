@@ -1,6 +1,6 @@
         .section .vectors
 
-        .long  0x0    /* Reset - initial stack pointer */
+        .long  0x7fffc /* Reset - initial stack pointer */
         .long  start  /* Reset - initial program counter */
         .long  start  /* Bus error */
         .long  start  /* Address error */
