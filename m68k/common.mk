@@ -42,7 +42,7 @@ all: main.bin
 	$(CXX) $(CFLAGS) $(CXXFLAGS) $(CARCH) -c $< -o $@
 
 %.elf:
-	$(LD) $(LDFLAGS) -T $(LIB)/m68k/m68k.lds $^ -o $@
+	$(LD) $(LDFLAGS) -T $(LIB)/m68k/m68k.lds $(LIB)/m68k/vectors.o $(LIB)/m68k/handlers.o $^ -o $@
 
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
