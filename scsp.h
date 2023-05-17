@@ -93,15 +93,35 @@ static_assert((offsetof (struct scsp_ctrl, STATUS)) == 0x08);
 static_assert((offsetof (struct scsp_ctrl, DMEA)) == 0x12);
 static_assert((offsetof (struct scsp_ctrl, MCIRE)) == 0x2e);
 
+typedef struct scsp_dsp_lh {
+  reg16 L;
+  reg16 H;
+} scsp_dsp_lh;
+
+typedef struct scsp_dsp_internal {
+  scsp_dsp_lh TEMP[128];
+  scsp_dsp_lh MEMS[32];
+  scsp_dsp_lh MIXS[16];
+  reg16 EFREG[16];
+  reg16 _res1[2];
+} scsp_dsp_internal;
+
+static_assert((sizeof (struct scsp_dsp_internal)) == 0x2e4);
+static_assert((offsetof (struct scsp_dsp_internal, EFREG)) == 0x2c0);
+
 typedef struct scsp_dsp {
   reg16 COEF[64];
   reg16 MADRS[32];
   reg16 _res[0x40 / 2];
-  reg16 micro[512];
-  reg16 internal[370];
+  struct {
+    reg16 MPRO[4];
+  } STEP[128];
+  scsp_dsp_internal internal;
 } scsp_dsp;
 
 static_assert((sizeof (struct scsp_dsp)) == 0x7e4);
+static_assert((offsetof (struct scsp_dsp, STEP)) == 0x100);
+static_assert((offsetof (struct scsp_dsp, internal)) == 0x500);
 
 typedef struct scsp_reg {
   scsp_slot slot[32];
@@ -160,15 +180,17 @@ enum scilv_bits {
 };
 
 enum loop_bits {
-  LOOP__KYONEX = (    1 << 12), // (KX) execute KEY_ON
-  LOOP__KYONB = (     1 << 11), // (KB) record KEY_ON, KEY_OFF
-  LOOP__SBCTL = (  0b00 << 9), // source bit control
-  LOOP__SSCTL = (  0b00 << 7 ), // sound source control
-  LOOP__LPCTL__OFF         = (  0b00 << 5 ), // loop control
-  LOOP__LPCTL__NORMAL      = (  0b01 << 5 ), // loop control
-  LOOP__LPCTL__REVERSE     = (  0b10 << 5 ), // loop control
-  LOOP__LPCTL__ALTERNATIVE = (  0b11 << 5 ), // loop control
-  LOOP__PCM8B = (     1 << 4 ), // (8B) 8bit signed PCM
+  LOOP__KYONEX = (1 << 12), // (KX) execute KEY_ON
+  LOOP__KYONB  = (1 << 11), // (KB) record KEY_ON, KEY_OFF
+  LOOP__SBCTL = (0b00 << 9), // source bit control
+  LOOP__SSCTL__DRAM  = (0b00 << 7), // sound source control
+  LOOP__SSCTL__NOISE = (0b01 << 7), // sound source control
+  LOOP__SSCTL__ZERO  = (0b10 << 7), // sound source control
+  LOOP__LPCTL__OFF         = (0b00 << 5), // loop control
+  LOOP__LPCTL__NORMAL      = (0b01 << 5), // loop control
+  LOOP__LPCTL__REVERSE     = (0b10 << 5), // loop control
+  LOOP__LPCTL__ALTERNATIVE = (0b11 << 5), // loop control
+  LOOP__PCM8B = (1 << 4), // (8B) 8bit signed PCM
 #define LOOP__SA(n) ((((n) >> 16) & 0b1111) << 0) // start address
 };
 
