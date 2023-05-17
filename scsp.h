@@ -134,6 +134,31 @@ static_assert((offsetof (struct scsp, reg)) == 0x100000);
 
 // bits
 
+enum interrupt_bits {
+  INT__SAMPLE = (1 << 10),
+  INT__MIDI_OUTPUT = (1 << 9),
+  INT__TIMER_C = (1 << 8),
+  INT__TIMER_B = (1 << 7),
+  INT__TIMER_A = (1 << 6),
+  INT__CPU = (1 << 5),
+  INT__DMA_TRANSFER_END = (1 << 4),
+  INT__MIDI_INPUT = (1 << 3),
+  INT__INT2N = (1 << 2),
+  INT__INT1N = (1 << 1),
+  INT__INT0N = (1 << 0),
+};
+
+enum scilv_bits {
+  SCILV__TIMER_B__TIMER_C__MIDI_OUT__1F = (1 << 7),
+  SCILV__TIMER_A = (1 << 6),
+  SCILV__CPU = (1 << 5),
+  SCILV__DMA_TRANSFER_END = (1 << 4),
+  SCILV__MIDI_IN = (1 << 3),
+  SCILV__INT2N = (1 << 2),
+  SCILV__INT1N = (1 << 1),
+  SCILV__INT0N = (1 << 0),
+};
+
 enum loop_bits {
   LOOP__KYONEX = (    1 << 12), // (KX) execute KEY_ON
   LOOP__KYONB = (     1 << 11), // (KB) record KEY_ON, KEY_OFF
@@ -193,8 +218,8 @@ enum mixer_bits {
 };
 
 //enum pitch_bits {
-#define PITCH__OCT(n) ((n) << 11)
-#define PITCH__FNS(n) ((n) << 0 )
+#define PITCH__OCT(n) (((n) & 0xf) << 11)
+#define PITCH__FNS(n) (((n) & 0x3ff) << 0 )
 //};
 
 enum scsp_bits {

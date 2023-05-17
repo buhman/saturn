@@ -1,0 +1,14 @@
+void auto_vector_1(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_1(void) { return; }
+void auto_vector_2(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_2(void) { return; }
+void auto_vector_3(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_3(void) { return; }
+void auto_vector_4(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_4(void) { return; }
+void auto_vector_5(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_5(void) { return; }
+void auto_vector_6(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_6(void) { return; }
+void auto_vector_7(void) __attribute__ ((weak, interrupt_handler));
+void auto_vector_7(void) { return; }

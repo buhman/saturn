@@ -25,13 +25,13 @@
         .long  start  /* reserved 22 */
         .long  start  /* reserved 23 */
         .long  start  /* Spurious interrupt */
-        .long  start  /* Auto vector level 1 interrupt */
-        .long  start  /* Auto vector level 2 interrupt */
-        .long  start  /* Auto vector level 3 interrupt */
-        .long  start  /* Auto vector level 4 interrupt */
-        .long  start  /* Auto vector level 5 interrupt */
-        .long  start  /* Auto vector level 6 interrupt */
-        .long  start  /* Auto vector level 7 interrupt */
+        .long  auto_vector_1  /* Auto vector level 1 interrupt */
+        .long  auto_vector_2  /* Auto vector level 2 interrupt */
+        .long  auto_vector_3  /* Auto vector level 3 interrupt */
+        .long  auto_vector_4  /* Auto vector level 4 interrupt */
+        .long  auto_vector_5  /* Auto vector level 5 interrupt */
+        .long  auto_vector_6  /* Auto vector level 6 interrupt */
+        .long  auto_vector_7  /* Auto vector level 7 interrupt */
         .long  start  /* Trap #0 vector */
         .long  start  /* Trap #1 vector */
         .long  start  /* Trap #2 vector */
@@ -64,4 +64,5 @@
         .long  start  /* reserved 61 */
         .long  start  /* reserved 62 */
         .long  start  /* reserved 63 */
+
         .align 0x400, 0xee
