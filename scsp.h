@@ -62,9 +62,9 @@ typedef struct scsp_ctrl {
   reg16 STATUS;    // slot status
   reg16 _res[(8 / 2)];
   struct {
-    reg16 DMEA;
-    reg16 DMAU;
     reg16 DMAL;
+    reg16 DMAH;
+    reg16 DMAX;
   };
   struct {
     reg16 TIMA;
@@ -136,6 +136,9 @@ typedef struct scsp_reg {
 } scsp_reg;
 
 static_assert((sizeof (struct scsp_reg)) == 0x000ee4);
+static_assert((offsetof (struct scsp_reg, slot[1])) == 0x20);
+static_assert((offsetof (struct scsp_reg, slot[2])) == 0x40);
+static_assert((offsetof (struct scsp_reg, slot[31])) == 0x3e0);
 static_assert((offsetof (struct scsp_reg, ctrl)) == 0x000400);
 static_assert((offsetof (struct scsp_reg, direct)) == 0x000600);
 static_assert((offsetof (struct scsp_reg, dsp)) == 0x000700);
@@ -244,10 +247,25 @@ enum mixer_bits {
 #define PITCH__FNS(n) (((n) & 0x3ff) << 0 )
 //};
 
-enum scsp_bits {
+enum master_bits {
   MIXER__MEM4MB = (1 << 9),
   MIXER__DAC18B = (1 << 8),
 #define MIXER__MVOL(n) ((n) << 0)
+};
+
+//enum status_bits {
+#define STATUS__MSLC(n) (((n) & 31) << 11)
+#define STATUS__CA(reg) (((reg) >> 7) & 15)
+//};
+
+enum dma_bits {
+#define DMAL__DMEA_L(n) ((n) & 0xfffe)
+#define DMAH__DMEA_H(reg) ((((reg) >> 16) & 0b1111) << 12)
+#define DMAH__DRGA(reg) ((reg) & 0x7fe)
+  DMAX__GA = (1 << 14),
+  DMAX__DI = (1 << 13),
+  DMAX__EX = (1 << 12),
+#define DMAX__DTLG(reg) ((reg) & 0x7fe)
 };
 
 // timer bits
