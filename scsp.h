@@ -90,7 +90,7 @@ typedef struct scsp_ctrl {
 
 static_assert((sizeof (struct scsp_ctrl)) == 0x30);
 static_assert((offsetof (struct scsp_ctrl, STATUS)) == 0x08);
-static_assert((offsetof (struct scsp_ctrl, DMEA)) == 0x12);
+static_assert((offsetof (struct scsp_ctrl, DMAL)) == 0x12);
 static_assert((offsetof (struct scsp_ctrl, MCIRE)) == 0x2e);
 
 typedef struct scsp_dsp_lh {
@@ -154,6 +154,7 @@ extern struct scsp scsp __asm("scsp");
 static_assert((sizeof (struct scsp)) == 0x100ee4);
 static_assert((offsetof (struct scsp, ram)) == 0x000000);
 static_assert((offsetof (struct scsp, reg)) == 0x100000);
+static_assert((sizeof (scsp.reg.dsp.STEP)) == 0x400);
 
 // bits
 
@@ -247,7 +248,7 @@ enum mixer_bits {
 #define PITCH__FNS(n) (((n) & 0x3ff) << 0 )
 //};
 
-enum master_bits {
+enum scsp_bits {
   MIXER__MEM4MB = (1 << 9),
   MIXER__DAC18B = (1 << 8),
 #define MIXER__MVOL(n) ((n) << 0)

@@ -2,6 +2,7 @@ OUTPUT_FORMAT("elf32-sh", "elf32-sh", "elf32-sh")
 OUTPUT_ARCH(sh)
 MEMORY
 {
+  ipl_rom : ORIGIN = 0x00000000, LENGTH = 512K
   work_ram_l : ORIGIN = 0x00200000, LENGTH = 1M
   work_ram_h : ORIGIN = 0x06000000, LENGTH = 1M
 }
@@ -44,3 +45,6 @@ vdp2 = 0x25E00000;
 scu  = 0x25FE0000;
 sh2_vec = 0x06000000;
 sh2  = 0xfffffe00;
+
+work_ram_l = 0x20200000;
+work_ram_h = 0x26000000;

@@ -58,6 +58,7 @@ typedef struct scu_reg {
 static_assert((sizeof (struct scu_reg)) == 0xD0);
 static_assert((offsetof (struct scu_reg, D1R)) == 0x20);
 static_assert((offsetof (struct scu_reg, AIACK)) == 0xA8);
+static_assert((offsetof (struct scu_reg, AREF)) == 0xB8);
 
 struct scu {
   scu_reg reg;

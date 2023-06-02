@@ -206,6 +206,8 @@ static_assert((sizeof (smpc_reg)) == 0x80);
 static_assert((offsetof (struct smpc_reg, oreg.OREG0)) == 0x21);
 static_assert((offsetof (struct smpc_reg, oreg.OREG1)) == 0x23);
 static_assert((offsetof (struct smpc_reg, oreg.OREG31)) == 0x5f);
+static_assert((offsetof (struct smpc_reg, COMREG)) == 0x1f);
+static_assert((offsetof (struct smpc_reg, SR)) == 0x61);
 static_assert((offsetof (struct smpc_reg, SF)) == 0x63);
 
 struct smpc {
