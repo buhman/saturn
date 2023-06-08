@@ -316,3 +316,8 @@ enum digital_bit {
   DIGITAL__2__Z = (1 << 4),
   DIGITAL__2__L = (1 << 3),
 };
+
+//enum keyboard_bit {
+#define KEYBOARD__MAKE(oreg) (((oreg) & (0b1000)) != 0)
+#define KEYBOARD__BREAK(oreg) (((oreg) & (0b0001)) != 0)
+//};

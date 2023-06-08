@@ -28,13 +28,27 @@ SECTIONS
     *(.rodata)
   } > work_ram_h
 
+  .ctors ALIGN(4) : SUBALIGN(4)
+  {
+    KEEP(*(.ctors))
+    KEEP(*(.ctors.*))
+  } > work_ram_h
+
   .bss ALIGN(4) (NOLOAD) : SUBALIGN(4)
   {
     *(.bss)
   } > work_ram_h
 
+  .bss.work_ram_l ALIGN(4) (NOLOAD) : SUBALIGN(4)
+  {
+    *(.bss.work_ram_l)
+  } > work_ram_l
+
   __bss_link_start = ADDR(.bss);
   __bss_link_end = ADDR(.bss) + SIZEOF(.bss);
+
+  __ctors_link_start = ADDR(.ctors);
+  __ctors_link_end = ADDR(.ctors) + SIZEOF(.ctors);
 }
 
 smpc = 0x20100000;

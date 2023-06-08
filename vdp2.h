@@ -348,8 +348,8 @@ enum pncn0_bit {
   PNCN0__N0CNSM = (1 << 14),
   PNCN0__N0SPR = (1 << 9),
   PNCN0__N0SCC = (1 << 8),
-#define PNCN0__N0SPLT(n) (n << 5)
-#define PNCN0__N0SCN(n) (n << 0)
+#define PNCN0__N0SPLT(n) ((n) << 5)
+#define PNCN0__N0SCN(n) ((n) << 0)
 };
 
 enum pncn1_bit {
@@ -358,8 +358,8 @@ enum pncn1_bit {
   PNCN1__N1CNSM = (1 << 14),
   PNCN1__N1SPR = (1 << 9),
   PNCN1__N1SCC = (1 << 8),
-#define PNCN1__N1SPLT(n) (n << 5)
-#define PNCN1__N1SCN(n) (n << 0)
+#define PNCN1__N1SPLT(n) ((n) << 5)
+#define PNCN1__N1SCN(n) ((n) << 0)
 };
 
 enum pncn2_bit {
@@ -368,8 +368,8 @@ enum pncn2_bit {
   PNCN2__N2CNSM = (1 << 14),
   PNCN2__N2SPR = (1 << 9),
   PNCN2__N2SCC = (1 << 8),
-#define PNCN2__N2SPLT(n) (n << 5)
-#define PNCN2__N2SCN(n) (n << 0)
+#define PNCN2__N2SPLT(n) ((n) << 5)
+#define PNCN2__N2SCN(n) ((n) << 0)
 };
 
 enum pncn3_bit {
@@ -378,8 +378,8 @@ enum pncn3_bit {
   PNCN3__N3CNSM = (1 << 14),
   PNCN3__N3SPR = (1 << 9),
   PNCN3__N3SCC = (1 << 8),
-#define PNCN3__N3SPLT(n) (n << 5)
-#define PNCN3__N3SCN(n) (n << 0)
+#define PNCN3__N3SPLT(n) ((n) << 5)
+#define PNCN3__N3SCN(n) ((n) << 0)
 };
 
 enum pncr_bit {
@@ -388,8 +388,8 @@ enum pncr_bit {
   PNCR__R0CNSM = (1 << 14),
   PNCR__R0SPR = (1 << 9),
   PNCR__R0SCC = (1 << 8),
-#define PNCR__R0SPLT(n) (n << 5)
-#define PNCR__R0SCN(n) (n << 0)
+#define PNCR__R0SPLT(n) ((n) << 5)
+#define PNCR__R0SCN(n) ((n) << 0)
 };
 
 enum plsz_bit {
@@ -415,49 +415,49 @@ enum plsz_bit {
   PLSZ__N0PLSZ__2x2 = (0b11 << 0),
 };
 // enum mpofn_bit {
-#define MPOFN__N3MP(n) (n << 12)
-#define MPOFN__N2MP(n) (n << 8)
-#define MPOFN__N1MP(n) (n << 4)
-#define MPOFN__N0MP(n) (n << 0)
+#define MPOFN__N3MP(n) ((n) << 12)
+#define MPOFN__N2MP(n) ((n) << 8)
+#define MPOFN__N1MP(n) ((n) << 4)
+#define MPOFN__N0MP(n) ((n) << 0)
 // };
 // enum mpofr_bit {
-#define MPOFR__RBMP(n) (n << 4)
-#define MPOFR__RAMP(n) (n << 0)
+#define MPOFR__RBMP(n) ((n) << 4)
+#define MPOFR__RAMP(n) ((n) << 0)
 // };
 
 // 4.8 Maps § Map Selection Register
 
 // enum mpabn0_bit {
-#define MPABN0__N0MPB(n) (n << 8)
-#define MPABN0__N0MPA(n) (n << 0)
+#define MPABN0__N0MPB(n) ((n) << 8)
+#define MPABN0__N0MPA(n) ((n) << 0)
 // };
 // enum mpcdn0_bit {
-#define MPABN0__N0MPD(n) (n << 8)
-#define MPABN0__N0MPC(n) (n << 0)
+#define MPABN0__N0MPD(n) ((n) << 8)
+#define MPABN0__N0MPC(n) ((n) << 0)
 // };
 // enum mpabn1_bit {
-#define MPABN1__N1MPB(n) (n << 8)
-#define MPABN1__N1MPA(n) (n << 0)
+#define MPABN1__N1MPB(n) ((n) << 8)
+#define MPABN1__N1MPA(n) ((n) << 0)
 // };
 // enum mpcdn1_bit {
-#define MPABN1__N1MPD(n) (n << 8)
-#define MPABN1__N1MPC(n) (n << 0)
+#define MPABN1__N1MPD(n) ((n) << 8)
+#define MPABN1__N1MPC(n) ((n) << 0)
 // };
 // enum mpabn2_bit {
-#define MPABN2__N2MPB(n) (n << 8)
-#define MPABN2__N2MPA(n) (n << 0)
+#define MPABN2__N2MPB(n) ((n) << 8)
+#define MPABN2__N2MPA(n) ((n) << 0)
 // };
 // enum mpcdn2_bit {
-#define MPABN2__N2MPD(n) (n << 8)
-#define MPABN2__N2MPC(n) (n << 0)
+#define MPABN2__N2MPD(n) ((n) << 8)
+#define MPABN2__N2MPC(n) ((n) << 0)
 // };
 // enum mpabn3_bit {
-#define MPABN3__N3MPB(n) (n << 8)
-#define MPABN3__N3MPA(n) (n << 0)
+#define MPABN3__N3MPB(n) ((n) << 8)
+#define MPABN3__N3MPA(n) ((n) << 0)
 // };
 // enum mpcdn3_bit {
-#define MPABN3__N3MPD(n) (n << 8)
-#define MPABN3__N3MPC(n) (n << 0)
+#define MPABN3__N3MPD(n) ((n) << 8)
+#define MPABN3__N3MPC(n) ((n) << 0)
 // };
 // enum mpabra_bit {
 // };
@@ -622,20 +622,20 @@ enum bktau_bit {
 // enum sfccmd_bit {
 // };
 // enum prisa_bit {
-#define PRISA__S1PRIN(n) (n << 8)
-#define PRISA__S0PRIN(n) (n << 0)
+#define PRISA__S1PRIN(n) ((n) << 8)
+#define PRISA__S0PRIN(n) ((n) << 0)
 // };
 // enum prisb_bit {
-#define PRISA__S3PRIN(n) (n << 8)
-#define PRISA__S2PRIN(n) (n << 0)
+#define PRISA__S3PRIN(n) ((n) << 8)
+#define PRISA__S2PRIN(n) ((n) << 0)
 // };
 // enum prisc_bit {
-#define PRISA__S5PRIN(n) (n << 8)
-#define PRISA__S4PRIN(n) (n << 0)
+#define PRISA__S5PRIN(n) ((n) << 8)
+#define PRISA__S4PRIN(n) ((n) << 0)
 // };
 // enum prisd_bit {
-#define PRISA__S7PRIN(n) (n << 8)
-#define PRISA__S6PRIN(n) (n << 0)
+#define PRISA__S7PRIN(n) ((n) << 8)
+#define PRISA__S6PRIN(n) ((n) << 0)
 // };
 // enum prina_bit {
 // };
@@ -681,5 +681,8 @@ enum bktau_bit {
 // pattern name tables
 //
 
-#define PATTERN_NAME_TABLE_2WORD__CHARACTER(n) (n << 0)
-#define PATTERN_NAME_TABLE_2WORD__PALETTE(n) (n << 16)
+#define PATTERN_NAME_TABLE_2WORD__CHARACTER(n) ((n) << 0)
+#define PATTERN_NAME_TABLE_2WORD__PALETTE(n) ((n) << 16)
+
+#define PATTERN_NAME_TABLE_1WORD__PALETTE(n) (((n) & 0b1111) << 12)
+#define PATTERN_NAME_TABLE_1WORD__CHARACTER(n) (((n) & 0x3ff) << 0)

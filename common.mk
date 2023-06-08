@@ -8,7 +8,7 @@ CARCH = -m2 -mb
 CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
 LDFLAGS = --gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start
-CXXFLAGS = -fno-exceptions -fno-rtti
+CXXFLAGS = -fno-exceptions -fno-rtti -fno-threadsafe-statics
 
 TARGET = sh2-none-elf-
 CC = $(TARGET)gcc
