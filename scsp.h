@@ -6,8 +6,8 @@
 // (presumably m68k can do 32-byte accesses)
 
 typedef union scsp_ram {
-  unsigned short u16[0x080000 / 2];
-  unsigned long  u32[0x080000 / 4];
+  uint16_t u16[0x080000 / 2];
+  uint32_t u32[0x080000 / 4];
 } scsp_ram;
 
 static_assert((sizeof (union scsp_ram)) == 0x080000);
@@ -18,8 +18,16 @@ typedef unsigned char scsp_res0[0x080000];
 // possible derived from "4.2 Sound Source Register"
 typedef struct scsp_slot {
   struct {     // Loop control
-    reg16 LOOP;
-    reg16 SA;  // start address
+    union {
+      struct {
+	union {
+	  reg16 LOOP;
+	  reg16 SAH;  // start address high
+	};
+	reg16 SAL;  // start address low
+      };
+      reg32 SA; // start address (requires mask)
+    };
     reg16 LSA; // loop start address
     reg16 LEA; // loop end address
   };
@@ -195,12 +203,25 @@ enum loop_bits {
   LOOP__LPCTL__REVERSE     = (0b10 << 5), // loop control
   LOOP__LPCTL__ALTERNATIVE = (0b11 << 5), // loop control
   LOOP__PCM8B = (1 << 4), // (8B) 8bit signed PCM
-#define LOOP__SA(n) ((((n) >> 16) & 0b1111) << 0) // start address
 };
 
 enum sa_bits {
-#define SA__SA(n) ((n) & 0xffff)
+  SA__KYONEX = (1 << (12 + 16)), // (KX) execute KEY_ON
+  SA__KYONB  = (1 << (11 + 16)), // (KB) record KEY_ON, KEY_OFF
+  SA__SBCTL = (0b00 << (9 + 16)), // source bit control
+  SA__SSCTL__DRAM  = (0b00 << (7 + 16)), // sound source control
+  SA__SSCTL__NOISE = (0b01 << (7 + 16)), // sound source control
+  SA__SSCTL__ZERO  = (0b10 << (7 + 16)), // sound source control
+  SA__LPCTL__OFF         = (0b00 << (5 + 16)), // loop control
+  SA__LPCTL__NORMAL      = (0b01 << (5 + 16)), // loop control
+  SA__LPCTL__REVERSE     = (0b10 << (5 + 16)), // loop control
+  SA__LPCTL__ALTERNATIVE = (0b11 << (5 + 16)), // loop control
+  SA__PCM8B = (1 << (4 + 16)), // (8B) 8bit signed PCM
+#define SA__SA(n) (n & 0xfffff)
 };
+
+#define SAH__SA(n) ((((n) >> 16) & 0b1111) << 0) // start address high
+#define SAL__SA(n) ((n) & 0xffff) // start address low
 
 enum eg_bits {
 #define EG__D2R(n) ((n & 0x1f) << 27)  // Decay 2 rate
