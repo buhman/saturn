@@ -38,8 +38,13 @@ typedef struct scsp_slot {
     };
     reg32 EG;
   };
-  reg16 VOLUME; // Sound volume
-  reg16 FM;     // FM modulation control
+  union {
+    struct {
+      reg16 FMU; // Sound volume
+      reg16 FML; // FM modulation control
+    };
+    reg32 FM;
+  };
   reg16 PITCH;  // FM pitch control
   reg16 LFO;    // LFO (low-freqency oscillator)
   union {       // slot mixer
@@ -234,17 +239,19 @@ enum eg_bits {
 #define EG__RR(n)  ((n & 0x1f) << 0 )  // Release rate
 };
 
-enum volume_bits {
-  VOLUME__STWINH = (1 << 9), // (SI) Stack write inhibit (FM-related register)
-  VOLUME__SDIR   = (1 << 8), // (SD) Sound direct
-#define FM__TL(n) ((n) << 0) // Total level
-};
-
 enum fm_bits {
+  FM__STWINH = (1 << (9 + 16)), // (SI) Stack write inhibit (FM-related register)
+  FM__SDIR   = (1 << (8 + 16)), // (SD) Sound direct
+#define FM__TL(n) ((n) << (0 + 16)) // Total level (FM)
   FM__MDL   = (  0b0000 << 12), // Modulation level
   FM__MDXSL = (0b000000 << 6 ), // Select modulation input X
   FM__MDYSL = (0b000000 << 0 ), // Select modulation input Y
 };
+
+//enum pitch_bits {
+#define PITCH__OCT(n) (((n) & 0xf) << 11)
+#define PITCH__FNS(n) (((n) & 0x3ff) << 0 )
+//};
 
 enum lfo_bits {
   LFO__LFORE  = (      1 << 15), // (RE) LFO reset
@@ -263,11 +270,6 @@ enum mixer_bits {
   MIXER__EFSDL = (  0b000 << 5 ),
   MIXER__EFPAN = (0b00000 << 0 ),
 };
-
-//enum pitch_bits {
-#define PITCH__OCT(n) (((n) & 0xf) << 11)
-#define PITCH__FNS(n) (((n) & 0x3ff) << 0 )
-//};
 
 enum scsp_bits {
   MIXER__MEM4MB = (1 << 9),

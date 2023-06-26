@@ -2,8 +2,8 @@
 
 #ifndef __cplusplus
 #define static_assert _Static_assert
-#endif
 #define offsetof __builtin_offsetof
+#endif
 
 typedef volatile uint8_t reg8;
 typedef volatile uint16_t reg16;
