@@ -1,3 +1,5 @@
+#pragma once
+
 #include "type.h"
 
 struct ioreg {

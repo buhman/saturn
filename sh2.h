@@ -2,8 +2,6 @@
 
 #include "type.h"
 
-#include <cstddef>
-
 typedef struct sh2_reg {
   reg8 SMR;      // 0x000
   reg8 BRR;      // 0x001

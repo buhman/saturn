@@ -1,8 +1,8 @@
+#include <stddef.h>
 #include <stdint.h>
 
 #ifndef __cplusplus
 #define static_assert _Static_assert
-#define offsetof __builtin_offsetof
 #endif
 
 typedef volatile uint8_t reg8;

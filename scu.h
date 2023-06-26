@@ -1,3 +1,5 @@
+#pragma once
+
 #include "type.h"
 
 typedef struct scu_reg {

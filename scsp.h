@@ -1,3 +1,5 @@
+#pragma once
+
 #include "type.h"
 
 // Because the main CPU cannot access in units of 8 bits, so read and write in
