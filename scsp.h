@@ -224,21 +224,21 @@ enum sa_bits {
   SA__LPCTL__REVERSE     = (0b10 << (5 + 16)), // loop control
   SA__LPCTL__ALTERNATIVE = (0b11 << (5 + 16)), // loop control
   SA__PCM8B = (1 << (4 + 16)), // (8B) 8bit signed PCM
-#define SA__SA(n) (n & 0xfffff)
+#define SA__SA(n) ((n) & 0xfffff)
 };
 
 #define SAH__SA(n) ((((n) >> 16) & 0b1111) << 0) // start address high
 #define SAL__SA(n) ((n) & 0xffff) // start address low
 
 enum eg_bits {
-#define EG__D2R(n) ((n & 0x1f) << 27)  // Decay 2 rate
-#define EG__D1R(n) ((n & 0x1f) << 22)  // Decay 1 rate
+#define EG__D2R(n) (((n) & 0x1f) << 27)  // Decay 2 rate
+#define EG__D1R(n) (((n) & 0x1f) << 22)  // Decay 1 rate
         EG__EGHOLD = (       1 << 21), // (HO) EG hold mode
-#define EG__AR(n)  ((n & 0x1f) << 16)  // Attack rate
+#define EG__AR(n)  (((n) & 0x1f) << 16)  // Attack rate
         EG__LPSLNK = (       1 << 14), // (LS) Loop start link
-#define EG__KRS(n) ((n & 0xf ) << 10)  // Key rate scaling
-#define EG__DL(n)  ((n & 0x1f) << 5 )  // Decay level
-#define EG__RR(n)  ((n & 0x1f) << 0 )  // Release rate
+#define EG__KRS(n) (((n) & 0xf ) << 10)  // Key rate scaling
+#define EG__DL(n)  (((n) & 0x1f) << 5 )  // Decay level
+#define EG__RR(n)  (((n) & 0x1f) << 0 )  // Release rate
 };
 
 enum fm_bits {
