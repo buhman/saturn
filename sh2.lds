@@ -2,7 +2,7 @@ OUTPUT_FORMAT("elf32-sh", "elf32-sh", "elf32-sh")
 OUTPUT_ARCH(sh)
 MEMORY
 {
-  ipl_rom : ORIGIN = 0x00000000, LENGTH = 512K
+  ipl_rom    : ORIGIN = 0x00000000, LENGTH = 512K
   work_ram_l : ORIGIN = 0x00200000, LENGTH = 1M
   work_ram_h : ORIGIN = 0x06000000, LENGTH = 1M
 }
@@ -26,6 +26,7 @@ SECTIONS
   .rodata ALIGN(4) : SUBALIGN(4)
   {
     *(.rodata)
+    *(.rodata.*)
   } > work_ram_h
 
   .ctors ALIGN(4) : SUBALIGN(4)
@@ -37,12 +38,20 @@ SECTIONS
   .bss ALIGN(4) (NOLOAD) : SUBALIGN(4)
   {
     *(.bss)
+    *(.bss.*)
   } > work_ram_h
 
   .bss.work_ram_l ALIGN(4) (NOLOAD) : SUBALIGN(4)
   {
     *(.bss.work_ram_l)
   } > work_ram_l
+
+  /DISCARD/ :
+  {
+    *(.debug*)
+    *(.comment*)
+    *(.rela*)
+  }
 
   __bss_link_start = ADDR(.bss);
   __bss_link_end = ADDR(.bss) + SIZEOF(.bss);

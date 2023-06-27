@@ -6,33 +6,52 @@ MEMORY
 }
 SECTIONS
 {
-  .text :
+  . = 0x00000000;
+
+  .text ALIGN(4) : SUBALIGN(4)
   {
-    . = 0x000000;
-    KEEP(*(.vectors))
-    KEEP(*(.text.start))    
+    KEEP(*(.vectors*))
+    KEEP(*(.text.start))
     *(.text)
-    *(.text.*)    
+    *(.text.*)
   } > sound_ram
 
   .data ALIGN(4) : SUBALIGN(4)
   {
     *(.data)
-    *(.data.*)    
+    *(.data.*)
   } > sound_ram
 
   .rodata ALIGN(4) : SUBALIGN(4)
   {
     *(.rodata)
+    *(.rodata.*)
+  } > sound_ram
+
+  .ctors ALIGN(4) : SUBALIGN(4)
+  {
+    KEEP(*(.ctors))
+    KEEP(*(.ctors.*))
   } > sound_ram
 
   .bss ALIGN(4) (NOLOAD) : SUBALIGN(4)
   {
     *(.bss)
+    *(.bss.*)
   } > sound_ram
+
+  /DISCARD/ :
+  {
+    *(.debug*)
+    *(.comment*)
+    *(.rela*)
+  }
 
   __bss_link_start = ADDR(.bss);
   __bss_link_end = ADDR(.bss) + SIZEOF(.bss);
+
+  __ctors_link_start = ADDR(.ctors);
+  __ctors_link_end = ADDR(.ctors) + SIZEOF(.ctors);
 }
 
 scsp = 0x000000;

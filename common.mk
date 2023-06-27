@@ -2,13 +2,13 @@ LIB ?= .
 OPT ?= -Og
 
 AARCH = --isa=sh2 --big
-AFLAGS = -g -gdwarf-4
+AFLAGS = -g -gdwarf-4 --fatal-warnings
 
 CARCH = -m2 -mb
 CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
-LDFLAGS = --gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start
-CXXFLAGS = -std=c++17 -fno-exceptions -fno-non-call-exceptions -fno-rtti -fno-threadsafe-statics
+LDFLAGS = --gc-sections --print-gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start --orphan-handling=error
+CXXFLAGS = -std=c++20 -fno-exceptions -fno-non-call-exceptions -fno-rtti -fno-threadsafe-statics
 
 TARGET = sh2-none-elf-
 CC = $(TARGET)gcc
