@@ -4,6 +4,11 @@
 
 /* command table */
 
+typedef struct cmd_point {
+  s16 X;
+  s16 Y;
+} cmd_point;
+
 typedef struct vdp1_cmd {
   u16 CTRL;
   u16 LINK;
@@ -11,14 +16,25 @@ typedef struct vdp1_cmd {
   u16 COLR;
   u16 SRCA;
   u16 SIZE;
-  s16 XA;
-  s16 YA;
-  s16 XB;
-  s16 YB;
-  s16 XC;
-  s16 YC;
-  s16 XD;
-  s16 YD;
+  union {
+    struct {
+      s16 XA;
+      s16 YA;
+      s16 XB;
+      s16 YB;
+      s16 XC;
+      s16 YC;
+      s16 XD;
+      s16 YD;
+    };
+    struct {
+      cmd_point A;
+      cmd_point B;
+      cmd_point C;
+      cmd_point D;
+    };
+    cmd_point point[4];
+  };
   u16 GDRA;
   u16 _dummy;
 } vdp1_cmd;
@@ -87,7 +103,7 @@ enum pmod_bit {
 
 enum colr_bit {
   COLR__RGB = (1 << 15)
-#define COLR__ADDRESS(n) (n >> 3)
+#define COLR__ADDRESS(n) ((n) >> 3)
 };
 
 //enum srca_bit {
@@ -102,23 +118,23 @@ enum colr_bit {
 /* memory offsets */
 
 typedef union vdp1_vram {
-  unsigned char   u8[0x080000 / 1];
-  unsigned short u16[0x080000 / 2];
-  unsigned long  u32[0x080000 / 4];
-  vdp1_cmd       cmd[0x080000 / 0x20];
+  uint8_t   u8[0x080000 / 1];
+  uint16_t  u16[0x080000 / 2];
+  uint32_t  u32[0x080000 / 4];
+  vdp1_cmd  cmd[0x080000 / 0x20];
 } vdp1_vram;
 
 static_assert((sizeof (union vdp1_vram)) == 0x080000);
 
 typedef union vdp1_framebuffer {
-  unsigned char   u8[0x040000 / 1];
-  unsigned short u16[0x040000 / 2];
-  unsigned long  u32[0x040000 / 4];
+  uint8_t   u8[0x040000 / 1];
+  uint16_t  u16[0x040000 / 2];
+  uint32_t  u32[0x040000 / 4];
 } vdp1_framebuffer;
 
 static_assert((sizeof (union vdp1_framebuffer)) == 0x040000);
 
-typedef unsigned char vdp1_res0[0x040000];
+typedef u8 vdp1_res0[0x040000];
 
 typedef struct vdp1_reg {
   reg16 TVMR;   /* TV MODE SELECTION */

@@ -297,10 +297,10 @@ enum dma_bits {
 // timer bits
 
 //enum tima_bits {
-#define TIMA__TACTL(n) ((n & 0b111) << 8)
-#define TIMB__TBCTL(n) ((n & 0b111) << 8)
-#define TIMC__TCCTL(n) ((n & 0b111) << 8)
-#define TIMA__TIMA(n) ((n & 0xff) << 0)
-#define TIMB__TIMB(n) ((n & 0xff) << 0)
-#define TIMC__TIMC(n) ((n & 0xff) << 0)
+#define TIMA__TACTL(n) (((n) & 0b111) << 8)
+#define TIMB__TBCTL(n) (((n) & 0b111) << 8)
+#define TIMC__TCCTL(n) (((n) & 0b111) << 8)
+#define TIMA__TIMA(n) (((n) & 0xff) << 0)
+#define TIMB__TIMB(n) (((n) & 0xff) << 0)
+#define TIMC__TIMC(n) (((n) & 0xff) << 0)
 //};
