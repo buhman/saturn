@@ -60,6 +60,8 @@ typedef struct scsp_slot {
 } scsp_slot;
 
 static_assert((sizeof (struct scsp_slot)) == 0x20);
+static_assert((offsetof (struct scsp_slot, EGU)) == 0x08);
+static_assert((offsetof (struct scsp_slot, EGL)) == 0x0a);
 static_assert((offsetof (struct scsp_slot, MIXER)) == 0x14);
 
 // Formal register names are poorly documented; these are as faithfully as

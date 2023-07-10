@@ -1,12 +1,13 @@
 LIB ?= .
 OPT ?= -Og
+DEBUG ?= -g -gdwarf-4
 
 AARCH = --isa=sh2 --big
-AFLAGS = -g -gdwarf-4 --fatal-warnings
+AFLAGS = --fatal-warnings
 
 CARCH = -m2 -mb
 CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -g -gdwarf-4 $(OPT)
+CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable
 LDFLAGS = --gc-sections --print-gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start --orphan-handling=error
 CXXFLAGS = -std=c++20 -fno-exceptions -fno-non-call-exceptions -fno-rtti -fno-threadsafe-statics
 
@@ -17,6 +18,8 @@ AS = $(TARGET)as
 LD = $(TARGET)ld
 OBJCOPY = $(TARGET)objcopy
 OBJDUMP = $(TARGET)objdump
+
+LIBGCC = $(shell $(CC) -print-file-name=libgcc.a)
 
 define BUILD_BINARY_O
 	$(OBJCOPY) \
@@ -38,16 +41,16 @@ SYS_IP_OBJ += $(LIB)/sys_init.o
 SYS_IP_OBJ += $(LIB)/smpsys.o
 
 %.o: %.s
-	$(AS) $(AFLAGS) $(AARCH) $< -o $@
+	$(AS) $(AARCH) $(AFLAGS) $(DEBUG) $< -o $@
 
 %.o: %.S
-	$(CC) $(CFLAGS) $(CARCH) -c $< -o $@
+	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(CARCH) -c $< -o $@
+	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
 %.o: %.cpp
-	$(CXX) $(CFLAGS) $(CXXFLAGS) $(CARCH) -c $< -o $@
+	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
 %.elf:
 	$(LD) $(LDFLAGS) -T $(LIB)/sh2.lds $^ -o $@
