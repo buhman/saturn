@@ -63,8 +63,8 @@ struct smpc_reg {
 };
 
 static_assert((sizeof (struct smpc_reg)) == 0x80);
-static_assert((sizeof (smpc_reg().IREG)) == 14);
-static_assert((sizeof (smpc_reg().OREG)) == 64);
+static_assert((sizeof (((struct smpc_reg){}).IREG)) == 14);
+static_assert((sizeof (((struct smpc_reg){}).OREG)) == 64);
 static_assert((offsetof (struct smpc_reg, IREG[0].val)) == 0x1);
 static_assert((offsetof (struct smpc_reg, IREG[1].val)) == 0x3);
 static_assert((offsetof (struct smpc_reg, IREG[6].val)) == 0xd);
