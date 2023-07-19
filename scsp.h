@@ -281,6 +281,27 @@ enum scsp_bits {
 #define MIXER__MVOL(n) ((n) << 0)
 };
 
+enum dsp_bits {
+  DSP__RBL__8K  = (0b00 << 7),
+  DSP__RBL__16K = (0b01 << 7),
+  DSP__RBL__32K = (0b10 << 7),
+  DSP__RBL__64K = (0b11 << 7),
+#define DSP__RBP(n) (((n) >> 12) & 0x7f)
+};
+
+enum midiu_bits {
+  MIDIU__MOFULL = (1 << 12), // (R)
+  MIDIU__MOEMP = (1 << 11), // (R)
+  MIDIU__MIOVF = (1 << 10), // (R)
+  MIDIU__MIFULL = (1 << 9), // (R)
+  MIDIU__MIEMP = (1 << 8), // (R)
+#define MIDIU__MIBUF(i) (((i) >> 0) & 0xff) // getter macro
+};
+
+// enum midil_bits {
+#define MIDIL__MOBUF(o) (((o) & 0xff) << 0) // setter macro
+//};
+
 //enum status_bits {
 #define STATUS__MSLC(n) (((n) & 31) << 11)
 #define STATUS__CA(reg) (((reg) >> 7) & 15)
