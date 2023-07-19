@@ -1,5 +1,6 @@
 *.o
 !/segasmp/lib/*
+segasmp/lib/sys_init.o
 *.iso
 *.elf
 *.bin
