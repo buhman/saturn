@@ -28,18 +28,6 @@ define BUILD_BINARY_O
 		$< $@
 endef
 
-$(LIB)/sys_%.o: $(LIB)/segasmp/lib/sys_%.o
-	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
-		--rename-section .text=.text.$* \
-		$< $@
-
-SYS_IP_OBJ += $(LIB)/sys_id.o
-SYS_IP_OBJ += $(LIB)/sys_sec.o
-SYS_IP_OBJ += $(LIB)/sys_area.o $(LIB)/sys_areb.o $(LIB)/sys_aree.o $(LIB)/sys_arej.o
-SYS_IP_OBJ += $(LIB)/sys_arek.o $(LIB)/sys_arel.o $(LIB)/sys_aret.o $(LIB)/sys_areu.o
-SYS_IP_OBJ += $(LIB)/sys_init.o
-SYS_IP_OBJ += $(LIB)/smpsys.o
-
 %.o: %.s
 	$(AS) $(AARCH) $(AFLAGS) $(DEBUG) $< -o $@
 
@@ -62,6 +50,24 @@ SYS_IP_OBJ += $(LIB)/smpsys.o
 	$(OBJCOPY) \
 		-I binary -O elf32-sh -B sh \
 		--rename-section .data=.rodata,alloc,load,readonly,data,contents \
+		$< $@
+
+SYS_IP_OBJ += $(LIB)/sys_id.o
+SYS_IP_OBJ += $(LIB)/sys_sec.o
+SYS_IP_OBJ += $(LIB)/area/sys_area.o
+SYS_IP_OBJ += $(LIB)/area/sys_areb.o
+SYS_IP_OBJ += $(LIB)/area/sys_aree.o
+SYS_IP_OBJ += $(LIB)/area/sys_arej.o
+SYS_IP_OBJ += $(LIB)/area/sys_arek.o
+SYS_IP_OBJ += $(LIB)/area/sys_arel.o
+SYS_IP_OBJ += $(LIB)/area/sys_aret.o
+SYS_IP_OBJ += $(LIB)/area/sys_areu.o
+SYS_IP_OBJ += $(LIB)/sys_init.o
+SYS_IP_OBJ += $(LIB)/smpsys.o
+
+$(LIB)/sys_%.o: $(LIB)/segasmp/lib/sys_%.o
+	$(OBJCOPY) -I coff-sh -O elf32-sh -g \
+		--rename-section .text=.text.$* \
 		$< $@
 
 sys_ip.elf: $(SYS_IP_OBJ)
