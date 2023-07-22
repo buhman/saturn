@@ -33,14 +33,34 @@ typedef struct vdp2_reg {
   reg16 VCNT;   /* V-COUNTER */
   reg16 _res0;
   reg16 RAMCTL; /* RAM CONTROL */
-  reg16 CYCA0L; /* VRAM CYCLE PATTERN (BANK A0) */
-  reg16 CYCA0U; /* VRAM CYCLE PATTERN (BANK A0) */
-  reg16 CYCA1L; /* VRAM CYCLE PATTERN (BANK A1) */
-  reg16 CYCA1U; /* VRAM CYCLE PATTERN (BANK A1) */
-  reg16 CYCB0L; /* VRAM CYCLE PATTERN (BANK A0) */
-  reg16 CYCB0U; /* VRAM CYCLE PATTERN (BANK A0) */
-  reg16 CYCB1L; /* VRAM CYCLE PATTERN (BANK B1) */
-  reg16 CYCB1U; /* VRAM CYCLE PATTERN (BANK B1) */
+  union {
+    struct {
+      reg16 CYCA0L; /* VRAM CYCLE PATTERN (BANK A0) */
+      reg16 CYCA0U; /* VRAM CYCLE PATTERN (BANK A0) */
+    };
+    reg32 CYCA0;
+  };
+  union {
+    struct {
+      reg16 CYCA1L; /* VRAM CYCLE PATTERN (BANK A1) */
+      reg16 CYCA1U; /* VRAM CYCLE PATTERN (BANK A1) */
+    };
+    reg32 CYCA1;
+  };
+  union {
+    struct {
+      reg16 CYCB0L; /* VRAM CYCLE PATTERN (BANK A0) */
+      reg16 CYCB0U; /* VRAM CYCLE PATTERN (BANK A0) */
+    };
+    reg32 CYCB0;
+  };
+  union {
+    struct {
+      reg16 CYCB1L; /* VRAM CYCLE PATTERN (BANK B1) */
+      reg16 CYCB1U; /* VRAM CYCLE PATTERN (BANK B1) */
+    };
+    reg32 CYCB1;
+  };
   reg16 BGON;   /* SCREEN DISPLAY ENABLE */
   reg16 MZCTL;  /* MOSAIC CONTROL */
   reg16 SFSEL;  /* SPECIAL FUNCTION CODE SELECT */
