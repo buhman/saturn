@@ -1,6 +1,7 @@
 LIB ?= .
 OPT ?= -Og
 DEBUG ?= -g -gdwarf-4
+GENERATED ?=
 
 AARCH = --isa=sh2 --big
 AFLAGS = --fatal-warnings
@@ -8,6 +9,7 @@ AFLAGS = --fatal-warnings
 CARCH = -m2 -mb
 CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
 CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable
+DEPFLAGS = -MMD -E
 LDFLAGS = --gc-sections --print-gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start --orphan-handling=error
 CXXFLAGS = -std=c++20 -fno-exceptions -fno-non-call-exceptions -fno-rtti -fno-threadsafe-statics
 
@@ -31,7 +33,7 @@ endef
 as_obj_binary = _binary_$(subst .,_,$(subst /,_,$(basename $(1))))
 
 define BUILD_BINARY_H
-	@echo $@
+	@echo gen $@
 	@echo '#pragma once' > $@
 	@echo '#include <stdint.h>' >> $@
 	@echo 'extern uint32_t $(call as_obj_binary,$@)_start __asm("$(call as_obj_binary,$@)_start");' >> $@
@@ -45,10 +47,16 @@ endef
 %.o: %.S
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
-%.o: %.c
+%.d: %.c $(GENERATED)
+	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $< -MF $@ -o /dev/null
+
+%.o: %.c %.d
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
-%.o: %.cpp
+%.d: %.cpp $(GENERATED)
+	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $< -MF $@ -o /dev/null
+
+%.o: %.cpp %.d
 	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
 %.elf: $(LIB)/start.o
@@ -127,7 +135,7 @@ sys_ip.elf: $(SYS_IP_OBJ)
 	@echo "    INDEX 01 00:00:00" >> $@
 
 clean:
-	rm -f *.iso *.o *.bin *.elf *.cue
+	rm -f *.iso *.o *.d *.bin *.elf *.cue
 
 .SUFFIXES:
 .INTERMEDIATE:

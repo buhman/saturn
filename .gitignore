@@ -6,3 +6,4 @@ segasmp/lib/sys_init.o
 *.bin
 *.gch
 *.out
+*.d
