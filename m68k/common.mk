@@ -27,6 +27,17 @@ define BUILD_BINARY_O
 		$< $@
 endef
 
+as_obj_binary = _binary_$(subst /,_,$(subst .,_,$(basename $(1))))
+
+define BUILD_BINARY_H
+	@echo $@
+	@echo '#pragma once' > $@
+	@echo '#include <stdint.h>' >> $@
+	@echo 'extern uint32_t $(call as_obj_binary,$@)_start __asm("$(call as_obj_binary,$@)_start");' >> $@
+	@echo 'extern uint32_t $(call as_obj_binary,$@)_end __asm("$(call as_obj_binary,$@)_end");' >> $@
+	@echo 'extern uint32_t $(call as_obj_binary,$@)_size __asm("$(call as_obj_binary,$@)_size");' >> $@
+endef
+
 all: main.bin
 
 %.o: %.s
