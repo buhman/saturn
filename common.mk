@@ -47,13 +47,13 @@ endef
 %.o: %.S
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
-%.d: %.c $(GENERATED)
+%.d: %.c | $(GENERATED)
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $< -MF $@ -o /dev/null
 
 %.o: %.c %.d
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
-%.d: %.cpp $(GENERATED)
+%.d: %.cpp | $(GENERATED)
 	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $< -MF $@ -o /dev/null
 
 %.o: %.cpp %.d

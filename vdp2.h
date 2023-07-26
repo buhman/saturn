@@ -454,32 +454,32 @@ enum plsz_bit {
 #define MPABN0__N0MPA(n) ((n) << 0)
 // };
 // enum mpcdn0_bit {
-#define MPABN0__N0MPD(n) ((n) << 8)
-#define MPABN0__N0MPC(n) ((n) << 0)
+#define MPCDN0__N0MPD(n) ((n) << 8)
+#define MPCDN0__N0MPC(n) ((n) << 0)
 // };
 // enum mpabn1_bit {
 #define MPABN1__N1MPB(n) ((n) << 8)
 #define MPABN1__N1MPA(n) ((n) << 0)
 // };
 // enum mpcdn1_bit {
-#define MPABN1__N1MPD(n) ((n) << 8)
-#define MPABN1__N1MPC(n) ((n) << 0)
+#define MPCDN1__N1MPD(n) ((n) << 8)
+#define MPCDN1__N1MPC(n) ((n) << 0)
 // };
 // enum mpabn2_bit {
 #define MPABN2__N2MPB(n) ((n) << 8)
 #define MPABN2__N2MPA(n) ((n) << 0)
 // };
 // enum mpcdn2_bit {
-#define MPABN2__N2MPD(n) ((n) << 8)
-#define MPABN2__N2MPC(n) ((n) << 0)
+#define MPCDN2__N2MPD(n) ((n) << 8)
+#define MPCDN2__N2MPC(n) ((n) << 0)
 // };
 // enum mpabn3_bit {
 #define MPABN3__N3MPB(n) ((n) << 8)
 #define MPABN3__N3MPA(n) ((n) << 0)
 // };
 // enum mpcdn3_bit {
-#define MPABN3__N3MPD(n) ((n) << 8)
-#define MPABN3__N3MPC(n) ((n) << 0)
+#define MPCDN3__N3MPD(n) ((n) << 8)
+#define MPCDN3__N3MPC(n) ((n) << 0)
 // };
 // enum mpabra_bit {
 // };
@@ -611,14 +611,74 @@ enum bktau_bit {
 // };
 // enum wpey1_bit {
 // };
-// enum wctla_bit {
-// };
-// enum wctlb_bit {
-// };
-// enum wctlc_bit {
-// };
-// enum wctld_bit {
-// };
+enum wctla_bit {
+  WCTLA__N1LOG__AND = (1 << 15), /* Overlay logic for NBG1  */
+  WCTLA__N1SWE = (1 << 13), /* Enable NBG1 on the Sprite window */
+  WCTLA__N1SWA__OUTSIDE = (1 << 12), /* Enable the outside of the Sprite window */
+  WCTLA__N1W1E = (1 << 11), /* Enable NBG1 on the W1 window */
+  WCTLA__N1W1A__OUTSIDE = (1 << 10), /* Enable the outside of the W1 window */
+  WCTLA__N1W0E = (1 << 9), /* Enable NBG1 on the W0 window */
+  WCTLA__N1W0A__OUTSIDE = (1 << 8), /* Enable the outside of the W0 window */
+
+  WCTLA__N0LOG__AND = (1 << 7), /* Overlay logic for NBG0  */
+  WCTLA__N0SWE = (1 << 5), /* Enable NBG0 on the Sprite window */
+  WCTLA__N0SWA__OUTSIDE = (1 << 4), /* Enable the outside of the Sprite window */
+  WCTLA__N0W1E = (1 << 3), /* Enable NBG0 on the W1 window */
+  WCTLA__N0W1A__OUTSIDE = (1 << 2), /* Enable the outside of the W1 window */
+  WCTLA__N0W0E = (1 << 1), /* Enable NBG0 on the W0 window */
+  WCTLA__N0W0A__OUTSIDE = (1 << 0), /* Enable the outside of the W0 window */
+};
+enum wctlb_bit {
+  WCTLA__N3LOG__AND = (1 << 15), /* Overlay logic for NBG3  */
+  WCTLA__N3SWE = (1 << 13), /* Enable NBG3 on the Sprite window */
+  WCTLA__N3SWA__OUTSIDE = (1 << 12), /* Enable the outside of the Sprite window */
+  WCTLA__N3W1E = (1 << 11), /* Enable NBG3 on the W1 window */
+  WCTLA__N3W1A__OUTSIDE = (1 << 10), /* Enable the outside of the W1 window */
+  WCTLA__N3W0E = (1 << 9), /* Enable NBG3 on the W0 window */
+  WCTLA__N3W0A__OUTSIDE = (1 << 8), /* Enable the outside of the W0 window */
+
+  WCTLA__N2LOG__AND = (1 << 7), /* Overlay logic for NBG2  */
+  WCTLA__N2SWE = (1 << 5), /* Enable NBG2 on the Sprite window */
+  WCTLA__N2SWA__OUTSIDE = (1 << 4), /* Enable the outside of the Sprite window */
+  WCTLA__N2W1E = (1 << 3), /* Enable NBG2 on the W1 window */
+  WCTLA__N2W1A__OUTSIDE = (1 << 2), /* Enable the outside of the W1 window */
+  WCTLA__N2W0E = (1 << 1), /* Enable NBG2 on the W0 window */
+  WCTLA__N2W0A__OUTSIDE = (1 << 0), /* Enable the outside of the W0 window */
+};
+enum wctlc_bit {
+  WCTLA__SPLOG__AND = (1 << 15), /* Overlay logic for Sprite  */
+  WCTLA__SPSWE = (1 << 13), /* Enable Sprite on the Sprite window */
+  WCTLA__SPSWA__OUTSIDE = (1 << 12), /* Enable the outside of the Sprite window */
+  WCTLA__SPW1E = (1 << 11), /* Enable Sprite on the W1 window */
+  WCTLA__SPW1A__OUTSIDE = (1 << 10), /* Enable the outside of the W1 window */
+  WCTLA__SPW0E = (1 << 9), /* Enable Sprite on the W0 window */
+  WCTLA__SPW0A__OUTSIDE = (1 << 8), /* Enable the outside of the W0 window */
+
+  WCTLA__R0LOG__AND = (1 << 7), /* Overlay logic for RBG0  */
+  WCTLA__R0SWE = (1 << 5), /* Enable RBG0 on the Sprite window */
+  WCTLA__R0SWA__OUTSIDE = (1 << 4), /* Enable the outside of the Sprite window */
+  WCTLA__R0W1E = (1 << 3), /* Enable RBG0 on the W1 window */
+  WCTLA__R0W1A__OUTSIDE = (1 << 2), /* Enable the outside of the W1 window */
+  WCTLA__R0W0E = (1 << 1), /* Enable RBG0 on the W0 window */
+  WCTLA__R0W0A__OUTSIDE = (1 << 0), /* Enable the outside of the W0 window */
+};
+enum wctld_bit {
+  WCTLA__CCLOG__AND = (1 << 15), /* Overlay logic for Rotation Parameter  */
+  WCTLA__CCSWE = (1 << 13), /* Enable Rotation Parameter on the Sprite window */
+  WCTLA__CCSWA__OUTSIDE = (1 << 12), /* Enable the outside of the Sprite window */
+  WCTLA__CCW1E = (1 << 11), /* Enable Rotation Parameter on the W1 window */
+  WCTLA__CCW1A__OUTSIDE = (1 << 10), /* Enable the outside of the W1 window */
+  WCTLA__CCW0E = (1 << 9), /* Enable Rotation Parameter on the W0 window */
+  WCTLA__CCW0A__OUTSIDE = (1 << 8), /* Enable the outside of the W0 window */
+
+  WCTLA__RPLOG__AND = (1 << 7), /* Overlay logic for Color Calculation  */
+  WCTLA__RPSWE = (1 << 5), /* Enable Color Calculation on the Sprite window */
+  WCTLA__RPSWA__OUTSIDE = (1 << 4), /* Enable the outside of the Sprite window */
+  WCTLA__RPW1E = (1 << 3), /* Enable Color Calculation on the W1 window */
+  WCTLA__RPW1A__OUTSIDE = (1 << 2), /* Enable the outside of the W1 window */
+  WCTLA__RPW0E = (1 << 1), /* Enable Color Calculation on the W0 window */
+  WCTLA__RPW0A__OUTSIDE = (1 << 0), /* Enable the outside of the W0 window */
+};
 // enum lwta0u_bit {
 // };
 // enum lwta0l_bit {
@@ -660,10 +720,15 @@ enum bktau_bit {
 #define PRISA__S6PRIN(n) ((n) << 0)
 // };
 // enum prina_bit {
+#define PRINA__N1PRIN(n) ((n) << 8)
+#define PRINA__N0PRIN(n) ((n) << 0)
 // };
 // enum prinb_bit {
+#define PRINB__N3PRIN(n) ((n) << 8)
+#define PRINB__N2PRIN(n) ((n) << 0)
 // };
 // enum prir_bit {
+#define PRIR__R0PRIN(n) ((n) << 0)
 // };
 // enum ccrsa_bit {
 // };
