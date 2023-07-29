@@ -47,16 +47,16 @@ endef
 %.o: %.S
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
-%.d: %.c | $(GENERATED)
-	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $< -MF $@ -o /dev/null
+%.c.d: | $(GENERATED)
+	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $(basename $@) -MF $@ -o /dev/null
 
-%.o: %.c %.d
+%.o: %.c %.c.d
 	$(CC) $(CARCH) $(CFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
-%.d: %.cpp | $(GENERATED)
-	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $< -MF $@ -o /dev/null
+%.cpp.d: | $(GENERATED)
+	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) $(DEPFLAGS) -c $(basename $@) -MF $@ -o /dev/null
 
-%.o: %.cpp %.d
+%.o: %.cpp %.cpp.d
 	$(CXX) $(CARCH) $(CFLAGS) $(CXXFLAGS) $(OPT) $(DEBUG) -c $< -o $@
 
 %.elf: $(LIB)/start.o
@@ -141,3 +141,9 @@ clean:
 .INTERMEDIATE:
 .SECONDARY:
 .PHONY: all clean
+
+%: RCS/%,v
+%: RCS/%
+%: %,v
+%: s.%
+%: SCCS/s.%

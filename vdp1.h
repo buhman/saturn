@@ -67,6 +67,7 @@ enum ctrl_bit {
   CTRL__ZP__LOWER_CENTER  = (0b1110 << 8),
   CTRL__ZP__LOWER_RIGHT   = (0b1111 << 8),
 
+  CTRL__DIR__NOT_INVERTED          = (0b00 << 4),
   CTRL__DIR__INVERTED_HORIZONTALLY = (0b01 << 4),
   CTRL__DIR__INVERTED_VERTICALLY   = (0b10 << 4),
 
