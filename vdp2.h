@@ -711,8 +711,13 @@ enum wctld_bit {
 // };
 // enum lwta1l_bit {
 // };
-// enum spctl_bit {
-// };
+enum spctl_bit {
+#define SPCTL__SPCCCS(n) (((n) & 0b11) << 12)
+#define SPCTL__SPCCN(n) (((n) & 0b111) << 8)
+  SPCTL__SPCLMD = (1 << 5),
+  SPCTL__SPWINEN = (1 << 4),
+#define SPCTL__SPTYPE(n) (((n) & 0b1111) << 0)
+};
 // enum sdctl_bit {
 // };
 // enum craofa_bit {

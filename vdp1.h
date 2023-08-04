@@ -102,9 +102,22 @@ enum pmod_bit {
 #define PMOD__COLOR_CALCULATION ( << 0)
 };
 
+// see "Pixel Data in Frame Buffer" in VDP1 manual
+// see "Figure 9.1" in VDP2 manual
+//  - these two figures refer to the same bits (VDP1 framebuffer data)
+// see "Scroll Dot Pixels" in the VDP2 manual
+//   - "Dot Color" (DC0, DC1, ...) is described in the "Scroll Dot
+//     Pixels" section.
 enum colr_bit {
   COLR__RGB = (1 << 15)
-#define COLR__ADDRESS(n) ((n) >> 3)
+#define COLR__LOOKUP_TABLE__ADDRESS(n) ((n) >> 3)
+
+#define COLR__COLOR_BANK__4BPP__PALETTE(n) (((n) & 0x7f) << 4)
+#define COLR__COLOR_BANK__TYPE0__PR(n) (((n) &  0b11) << 14)
+#define COLR__COLOR_BANK__TYPE0__CC(n) (((n) & 0b111) << 11)
+
+#define COLR__COLOR_BANK__TYPE1__PR(n) (((n) & 0b111) << 13)
+#define COLR__COLOR_BANK__TYPE1__CC(n) (((n) &  0b11) << 11)
 };
 
 //enum srca_bit {
