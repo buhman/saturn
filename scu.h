@@ -70,6 +70,148 @@ extern struct scu scu __asm("scu");
 
 /* bits */
 
+#define D0R__READ_ADDRESS(n) ((n) & 0x3ffffff)
+#define D0W__WRITE_ADDRESS(n) ((n) & 0x3ffffff)
+#define D0C__BYTE_COUNT(n) ((n) & 0x7ffff)
+enum d0ad_bits {
+  D0AD__D0RA__0BYTES = (0 << 8),
+  D0AD__D0RA__4BYTES = (1 << 8),
+  D0AD__D0WA__0BYTES = (0b000 << 0),
+  D0AD__D0WA__2BYTES = (0b001 << 0),
+  D0AD__D0WA__4BYTES = (0b010 << 0),
+  D0AD__D0WA__8BYTES = (0b011 << 0),
+  D0AD__D0WA__16BYTES = (0b100 << 0),
+  D0AD__D0WA__32BYTES = (0b101 << 0),
+  D0AD__D0WA__64BYTES = (0b110 << 0),
+  D0AD__D0WA__128BYTES = (0b111 << 0),
+};
+enum d0en_bits {
+  D0EN__D0EN = (1 << 8),
+  D0EN__D0GO = (1 << 0),
+};
+enum d0md_bits {
+  D0MD__D0MOD = (1 << 24),
+  D0MD__D0RUP = (1 << 16),
+  D0MD__D0WUP = (1 << 8),
+  D0MD__D0FT__V_BLANK_IN  = (0b000 << 0),
+  D0MD__D0FT__V_BLANK_OUT = (0b001 << 0),
+  D0MD__D0FT__H_BLANK_IN  = (0b010 << 0),
+  D0MD__D0FT__TIMER_0     = (0b011 << 0),
+  D0MD__D0FT__TIMER_1     = (0b100 << 0),
+  D0MD__D0FT__SOUND_REQ   = (0b101 << 0),
+  D0MD__D0FT__SPRITE_DRAW = (0b110 << 0),
+  D0MD__D0FT__FACTOR_BIT  = (0b111 << 0),
+};
+
+#define D1R__READ_ADDRESS(n) ((n) & 0x3ffffff)
+#define D1W__WRITE_ADDRESS(n) ((n) & 0x3ffffff)
+#define D1C__BYTE_COUNT(n) ((n) & 0x7ffff)
+enum d1ad_bits {
+  D1AD__D1RA__0BYTES = (0 << 8),
+  D1AD__D1RA__4BYTES = (1 << 8),
+  D1AD__D1WA__0BYTES = (0b000 << 0),
+  D1AD__D1WA__2BYTES = (0b001 << 0),
+  D1AD__D1WA__4BYTES = (0b010 << 0),
+  D1AD__D1WA__8BYTES = (0b011 << 0),
+  D1AD__D1WA__16BYTES = (0b100 << 0),
+  D1AD__D1WA__32BYTES = (0b101 << 0),
+  D1AD__D1WA__64BYTES = (0b110 << 0),
+  D1AD__D1WA__128BYTES = (0b111 << 0),
+};
+enum d1en_bits {
+  D1EN__D1EN = (1 << 8),
+  D1EN__D1GO = (1 << 0),
+};
+enum d1md_bits {
+  D1MD__D1MOD = (1 << 24),
+  D1MD__D1RUP = (1 << 16),
+  D1MD__D1WUP = (1 << 8),
+  D1MD__D1FT__V_BLANK_IN  = (0b000 << 0),
+  D1MD__D1FT__V_BLANK_OUT = (0b001 << 0),
+  D1MD__D1FT__H_BLANK_IN  = (0b010 << 0),
+  D1MD__D1FT__TIMER_0     = (0b011 << 0),
+  D1MD__D1FT__TIMER_1     = (0b100 << 0),
+  D1MD__D1FT__SOUND_REQ   = (0b101 << 0),
+  D1MD__D1FT__SPRITE_DRAW = (0b110 << 0),
+  D1MD__D1FT__FACTOR_BIT  = (0b111 << 0),
+};
+
+#define D2R__READ_ADDRESS(n) ((n) & 0x3ffffff)
+#define D2W__WRITE_ADDRESS(n) ((n) & 0x3ffffff)
+#define D2C__BYTE_COUNT(n) ((n) & 0x7ffff)
+enum d2ad_bits {
+  D2AD__D2RA__0BYTES = (0 << 8),
+  D2AD__D2RA__4BYTES = (1 << 8),
+  D2AD__D2WA__0BYTES = (0b000 << 0),
+  D2AD__D2WA__2BYTES = (0b001 << 0),
+  D2AD__D2WA__4BYTES = (0b010 << 0),
+  D2AD__D2WA__8BYTES = (0b011 << 0),
+  D2AD__D2WA__16BYTES = (0b100 << 0),
+  D2AD__D2WA__32BYTES = (0b101 << 0),
+  D2AD__D2WA__64BYTES = (0b110 << 0),
+  D2AD__D2WA__128BYTES = (0b111 << 0),
+};
+enum d2en_bits {
+  D2EN__D2EN = (1 << 8),
+  D2EN__D2GO = (1 << 0),
+};
+enum d2md_bits {
+  D2MD__D2MOD = (1 << 24),
+  D2MD__D2RUP = (1 << 16),
+  D2MD__D2WUP = (1 << 8),
+  D2MD__D2FT__V_BLANK_IN  = (0b000 << 0),
+  D2MD__D2FT__V_BLANK_OUT = (0b001 << 0),
+  D2MD__D2FT__H_BLANK_IN  = (0b010 << 0),
+  D2MD__D2FT__TIMER_0     = (0b011 << 0),
+  D2MD__D2FT__TIMER_1     = (0b100 << 0),
+  D2MD__D2FT__SOUND_REQ   = (0b101 << 0),
+  D2MD__D2FT__SPRITE_DRAW = (0b110 << 0),
+  D2MD__D2FT__FACTOR_BIT  = (0b111 << 0),
+};
+
+enum dstp_bits {
+  DSTP__FORCE_STOP = (1 << 0),
+};
+
+enum dsta_bits {
+  DSTA__DACSD = (1 << 22),
+  DSTA__DACSB = (1 << 21),
+  DSTA__DACSA = (1 << 20),
+  DSTA__D1BK  = (1 << 17),
+  DSTA__D0BK  = (1 << 16),
+  DSTA__D2WT  = (1 << 13),
+  DSTA__D2MV  = (1 << 12),
+  DSTA__D1WT  = (1 << 9),
+  DSTA__D1MV  = (1 << 8),
+  DSTA__D0WT  = (1 << 5),
+  DSTA__D0MV  = (1 << 4),
+  DSTA__DDWT  = (1 << 1),
+  DSTA__DDMV  = (1 << 0),
+};
+
+enum ppaf_bits {
+  PPAF__PR = (1 << 26),
+  PPAF__EP = (1 << 25),
+  PPAF__T0 = (1 << 23),
+  PPAF__S  = (1 << 22),
+  PPAF__Z  = (1 << 21),
+  PPAF__C  = (1 << 20),
+  PPAF__V  = (1 << 19),
+  PPAF__E  = (1 << 18),
+  PPAF__ES = (1 << 17),
+  PPAF__EX = (1 << 16),
+  PPAF__LE = (1 << 15),
+#define PPAF__PRG_ADDRESS(n) (((n) & 0xff) << 0)
+};
+
+enum pda_bits {
+  PDA__RA__RAM0 = (0b00 << 6),
+  PDA__RA__RAM1 = (0b01 << 6),
+  PDA__RA__RAM2 = (0b10 << 6),
+  PDA__RA__RAM3 = (0b11 << 6),
+#define PDA__RAM_ADDRESS(n) (((n) & 0x3f) << 0)
+};
+
 enum ims_bits {
   IMS__A_BUS = (1 << 15),
   IMS__DRAW_END = (1 << 13),

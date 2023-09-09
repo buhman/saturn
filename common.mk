@@ -135,7 +135,7 @@ sys_ip.elf: $(SYS_IP_OBJ)
 	@echo "    INDEX 01 00:00:00" >> $@
 
 clean:
-	rm -f *.iso *.o *.d *.bin *.elf *.cue
+	rm -f *.iso *.o *.d *.bin *.elf *.cue *.gch
 
 .SUFFIXES:
 .INTERMEDIATE:
