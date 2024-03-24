@@ -718,78 +718,192 @@ enum spctl_bit {
   SPCTL__SPWINEN = (1 << 4),
 #define SPCTL__SPTYPE(n) (((n) & 0b1111) << 0)
 };
-// enum sdctl_bit {
-// };
+enum sdctl_bit {
+  SDCTL__TPSDSL = (1 << 8),
+  SDCTL__BKSDEN = (1 << 5),
+  SDCTL__R0SDEN = (1 << 4),
+  SDCTL__N3SDEN = (1 << 3),
+  SDCTL__N2SDEN = (1 << 2),
+  SDCTL__N1SDEN = (1 << 1),
+  SDCTL__N0SDEN = (1 << 0),
+};
 // enum craofa_bit {
+#define CRAOFA__N3CAOS(n) (((n) & 0b111) << 12)
+#define CRAOFA__N2CAOS(n) (((n) & 0b111) << 8)
+#define CRAOFA__N1CAOS(n) (((n) & 0b111) << 4)
+#define CRAOFA__N0CAOS(n) (((n) & 0b111) << 0)
 // };
 // enum craofb_bit {
+#define CRAOFB__SPCAOS(n) (((n) & 0b111) << 4)
+#define CRAOFB__R0CAOS(n) (((n) & 0b111) << 0)
 // };
-// enum lnclen_bit {
-// };
-// enum sfprmd_bit {
-// };
-// enum ccctl_bit {
-// };
-// enum sfccmd_bit {
-// };
+enum lnclen_bit {
+  LNCLEN__SPLCEN = (1 << 5),
+  LNCLEN__R0LCEN = (1 << 4),
+  LNCLEN__N3LCEN = (1 << 3),
+  LNCLEN__N2LCEN = (1 << 2),
+  LNCLEN__N1LCEN = (1 << 1),
+  LNCLEN__N0LCEN = (1 << 0),
+};
+enum sfprmd_bit {
+  SFPRMD__R0SPRM__MODE0 = (0b00 << 8),
+  SFPRMD__R0SPRM__MODE1 = (0b01 << 8),
+  SFPRMD__R0SPRM__MODE2 = (0b10 << 8),
+
+  SFPRMD__N3SPRM__MODE0 = (0b00 << 6),
+  SFPRMD__N3SPRM__MODE1 = (0b01 << 6),
+  SFPRMD__N3SPRM__MODE2 = (0b10 << 6),
+
+  SFPRMD__N2SPRM__MODE0 = (0b00 << 4),
+  SFPRMD__N2SPRM__MODE1 = (0b01 << 4),
+  SFPRMD__N2SPRM__MODE2 = (0b10 << 4),
+
+  SFPRMD__N1SPRM__MODE0 = (0b00 << 2),
+  SFPRMD__N1SPRM__MODE1 = (0b01 << 2),
+  SFPRMD__N1SPRM__MODE2 = (0b10 << 2),
+
+  SFPRMD__N0SPRM__MODE0 = (0b00 << 0),
+  SFPRMD__N0SPRM__MODE1 = (0b01 << 0),
+  SFPRMD__N0SPRM__MODE2 = (0b10 << 0),
+};
+enum ccctl_bit {
+  CCCTL__BOKEN = (1 << 15),
+  CCCTL__BOKN__SPRITE = (0b000 << 12),
+  CCCTL__BOKN__RBG0 = (0b001 << 12),
+  CCCTL__BOKN__NBG0_OR_RBG1 = (0b010 << 12),
+  CCCTL__BOKN__NBG1_OR_EXBG = (0b100 << 12),
+  CCCTL__BOKN__NBG2 = (0b101 << 12),
+  CCCTL__BOKN__NBG3 = (0b110 << 12),
+  CCCTL__EXCCEN = (1 << 10),
+  CCCTL__CCRTMD = (1 << 9),
+  CCCTL__CCMD = (1 << 8),
+  CCCTL__SPCCEN = (1 << 6),
+  CCCTL__LCCCEN = (1 << 5),
+  CCCTL__R0CCEN = (1 << 4),
+  CCCTL__N3CCEN = (1 << 3),
+  CCCTL__N2CCEN = (1 << 2),
+  CCCTL__N1CCEN = (1 << 1),
+  CCCTL__N0CCEN = (1 << 0),
+};
+enum sfccmd_bit {
+  SFCCMD__R0SCCM__PER_SCREEN     = (0b00 << 8),
+  SFCCMD__R0SCCM__PER_CHARACTER  = (0b01 << 8),
+  SFCCMD__R0SCCM__PER_DOT        = (0b10 << 8),
+  SFCCMD__R0SCCM__COLOR_DATA_MSB = (0b11 << 8),
+
+  SFCCMD__N3SCCM__PER_SCREEN     = (0b00 << 6),
+  SFCCMD__N3SCCM__PER_CHARACTER  = (0b01 << 6),
+  SFCCMD__N3SCCM__PER_DOT        = (0b10 << 6),
+  SFCCMD__N3SCCM__COLOR_DATA_MSB = (0b11 << 6),
+
+  SFCCMD__N2SCCM__PER_SCREEN     = (0b00 << 4),
+  SFCCMD__N2SCCM__PER_CHARACTER  = (0b01 << 4),
+  SFCCMD__N2SCCM__PER_DOT        = (0b10 << 4),
+  SFCCMD__N2SCCM__COLOR_DATA_MSB = (0b11 << 4),
+
+  SFCCMD__N1SCCM__PER_SCREEN     = (0b00 << 2),
+  SFCCMD__N1SCCM__PER_CHARACTER  = (0b01 << 2),
+  SFCCMD__N1SCCM__PER_DOT        = (0b10 << 2),
+  SFCCMD__N1SCCM__COLOR_DATA_MSB = (0b11 << 2),
+
+  SFCCMD__N0SCCM__PER_SCREEN     = (0b00 << 0),
+  SFCCMD__N0SCCM__PER_CHARACTER  = (0b01 << 0),
+  SFCCMD__N0SCCM__PER_DOT        = (0b10 << 0),
+  SFCCMD__N0SCCM__COLOR_DATA_MSB = (0b11 << 0),
+};
 // enum prisa_bit {
-#define PRISA__S1PRIN(n) ((n) << 8)
-#define PRISA__S0PRIN(n) ((n) << 0)
+#define PRISA__S1PRIN(n) (((n) & 0xff) << 8)
+#define PRISA__S0PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum prisb_bit {
-#define PRISA__S3PRIN(n) ((n) << 8)
-#define PRISA__S2PRIN(n) ((n) << 0)
+#define PRISA__S3PRIN(n) (((n) & 0xff) << 8)
+#define PRISA__S2PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum prisc_bit {
-#define PRISA__S5PRIN(n) ((n) << 8)
-#define PRISA__S4PRIN(n) ((n) << 0)
+#define PRISA__S5PRIN(n) (((n) & 0xff) << 8)
+#define PRISA__S4PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum prisd_bit {
-#define PRISA__S7PRIN(n) ((n) << 8)
-#define PRISA__S6PRIN(n) ((n) << 0)
+#define PRISA__S7PRIN(n) (((n) & 0xff) << 8)
+#define PRISA__S6PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum prina_bit {
-#define PRINA__N1PRIN(n) ((n) << 8)
-#define PRINA__N0PRIN(n) ((n) << 0)
+#define PRINA__N1PRIN(n) (((n) & 0xff) << 8)
+#define PRINA__N0PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum prinb_bit {
-#define PRINB__N3PRIN(n) ((n) << 8)
-#define PRINB__N2PRIN(n) ((n) << 0)
+#define PRINB__N3PRIN(n) (((n) & 0xff) << 8)
+#define PRINB__N2PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum prir_bit {
-#define PRIR__R0PRIN(n) ((n) << 0)
+#define PRIR__R0PRIN(n) (((n) & 0xff) << 0)
 // };
 // enum ccrsa_bit {
+#define CCRSA__S1CCRT(n) (((n) & 0xff) << 8)
+#define CCRSA__S0CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrsb_bit {
+#define CCRSB__S3CCRT(n) (((n) & 0xff) << 8)
+#define CCRSB__S2CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrsc_bit {
+#define CCRSC__S5CCRT(n) (((n) & 0xff) << 8)
+#define CCRSC__S4CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrsd_bit {
+#define CCRSD__S7CCRT(n) (((n) & 0xff) << 8)
+#define CCRSD__S6CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrna_bit {
+#define CCRNA__N1CCRT(n) (((n) & 0xff) << 8)
+#define CCRNA__N0CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrnb_bit {
+#define CCRNB__N3CCRT(n) (((n) & 0xff) << 8)
+#define CCRNB__N2CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrr_bit {
+#define CCRR__R0CCRT(n) (((n) & 0xff) << 0)
 // };
 // enum ccrlb_bit {
+#define CCRLB__BKCCRT(n) (((n) & 0xff) << 8)
+#define CCRLB__LCCCRT(n) (((n) & 0xff) << 0)
 // };
-// enum clofen_bit {
-// };
-// enum clofsl_bit {
-// };
+enum clofen_bit {
+  CLOFEN__SPCOEN = (1 << 6),
+  CLOFEN__BKCOEN = (1 << 5),
+  CLOFEN__R0COEN = (1 << 4),
+  CLOFEN__N3COEN = (1 << 3),
+  CLOFEN__N2COEN = (1 << 2),
+  CLOFEN__N1COEN = (1 << 1),
+  CLOFEN__N0COEN = (1 << 0),
+};
+enum clofsl_bit {
+  CLOFEN__SPCOSL = (1 << 6),
+  CLOFEN__BKCOSL = (1 << 5),
+  CLOFEN__R0COSL = (1 << 4),
+  CLOFEN__N3COSL = (1 << 3),
+  CLOFEN__N2COSL = (1 << 2),
+  CLOFEN__N1COSL = (1 << 1),
+  CLOFEN__N0COSL = (1 << 0),
+};
 // enum coar_bit {
+#define COAR__COARD() ((n) & 0x1ff)
 // };
 // enum coag_bit {
+#define COAG__COAGR() ((n) & 0x1ff)
 // };
 // enum coab_bit {
+#define COAB__COABL() ((n) & 0x1ff)
 // };
 // enum cobr_bit {
+#define COBR__COBRD() ((n) & 0x1ff)
 // };
 // enum cobg_bit {
+#define COBG__COBGR() ((n) & 0x1ff)
 // };
 // enum cobb_bit {
+#define COBB__COBBL() ((n) & 0x1ff)
 // };
 
 
