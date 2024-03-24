@@ -712,7 +712,10 @@ enum wctld_bit {
 // enum lwta1l_bit {
 // };
 enum spctl_bit {
-#define SPCTL__SPCCCS(n) (((n) & 0b11) << 12)
+  SPCTL__SPCCCS__LESS_EQUAL    = (0b00 << 12),
+  SPCTL__SPCCCS__EQUAL         = (0b01 << 12),
+  SPCTL__SPCCCS__GREATER_EQUAL = (0b10 << 12),
+  SPCTL__SPCCCS__MSB_1         = (0b11 << 12),
 #define SPCTL__SPCCN(n) (((n) & 0b111) << 8)
   SPCTL__SPCLMD = (1 << 5),
   SPCTL__SPWINEN = (1 << 4),
