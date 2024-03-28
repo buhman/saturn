@@ -1,0 +1,16 @@
+rom         = 0x20000000; /* 512 Kbyte */
+smpc        = 0x20100000; /* 128 byte  */
+backup_ram  = 0x20180000; /*  64 Kbyte */
+work_ram_l  = 0x20200000; /*   1 Mbyte */
+a_bus_cs0   = 0x22000000; /*  32 Mbyte */
+a_bus_cs1   = 0x24000000; /*  16 Mbyte */
+a_bus_dummy = 0x25000000; /*   8 Mbyte */
+a_bus_cs2   = 0x25800000; /*   1 Mbyte */
+cdb         = 0x25890000;
+scsp        = 0x25a00000;
+vdp1        = 0x25c00000;
+vdp2        = 0x25e00000;
+scu         = 0x25fe0000;
+sh2_vec     = 0x26000000;
+work_ram_h  = 0x26000000;
+sh2         = 0xfffffe00;
