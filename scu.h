@@ -59,6 +59,7 @@ typedef struct scu_reg {
 
 static_assert((sizeof (struct scu_reg)) == 0xD0);
 static_assert((offsetof (struct scu_reg, D1R)) == 0x20);
+static_assert((offsetof (struct scu_reg, T1MD)) == 0x98);
 static_assert((offsetof (struct scu_reg, AIACK)) == 0xA8);
 static_assert((offsetof (struct scu_reg, AREF)) == 0xB8);
 
@@ -214,7 +215,7 @@ enum pda_bits {
 
 enum ims_bits {
   IMS__A_BUS = (1 << 15),
-  IMS__DRAW_END = (1 << 13),
+  IMS__SPRITE_DRAW_END = (1 << 13),
   IMS__DMA_ILLEGAL = (1 << 12),
   IMS__DMA0_END = (1 << 11),
   IMS__DMA1_END = (1 << 10),
@@ -248,7 +249,7 @@ enum ist_bits {
   IST__EXT01 = (1 << 17),
   IST__EXT00 = (1 << 16),
 
-  IST__DRAW_END = (1 << 13),
+  IST__SPRITE_DRAW_END = (1 << 13),
   IST__DMA_ILLEGAL = (1 << 12),
   IST__DMA0_END = (1 << 11),
   IST__DMA1_END = (1 << 10),
@@ -283,7 +284,7 @@ enum scu_vec {
   SCU_VEC__DMA1_END,
   SCU_VEC__DMA0_END,
   SCU_VEC__DMA_ILLEGAL,
-  SCU_VEC__DRAW_END,
+  SCU_VEC__SPRITE_DRAW_END,
   __scu_vec_res0,
   __scu_vec_res1,
   SCU_VEC__EXT00,

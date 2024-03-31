@@ -2,7 +2,6 @@ OUTPUT_FORMAT("elf32-sh", "elf32-sh", "elf32-sh")
 OUTPUT_ARCH(sh)
 MEMORY
 {
-  ipl_rom    : ORIGIN = 0x00000000, LENGTH = 512K
   work_ram_l : ORIGIN = 0x00200000, LENGTH = 1M
   work_ram_h : ORIGIN = 0x06000000, LENGTH = 1M
 }
@@ -45,29 +44,7 @@ SECTIONS
   {
     *(.bss.work_ram_l)
   } > work_ram_l
-
-  /DISCARD/ :
-  {
-    *(.debug*)
-    *(.comment*)
-    *(.rela*)
-  }
-
-  __bss_link_start = ADDR(.bss);
-  __bss_link_end = ADDR(.bss) + SIZEOF(.bss);
-
-  __ctors_link_start = ADDR(.ctors);
-  __ctors_link_end = ADDR(.ctors) + SIZEOF(.ctors);
 }
 
-smpc = 0x20100000;
-cdb  = 0x25890000;
-scsp = 0x25A00000;
-vdp1 = 0x25C00000;
-vdp2 = 0x25E00000;
-scu  = 0x25FE0000;
-sh2_vec = 0x06000000;
-sh2  = 0xfffffe00;
-
-work_ram_l = 0x20200000;
-work_ram_h = 0x26000000;
+INCLUDE "symbols.lds"
+INCLUDE "addresses.lds"
