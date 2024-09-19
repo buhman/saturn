@@ -110,6 +110,48 @@ extern struct sh2 sh2 __asm("sh2");
 
 extern reg32 sh2_vec[0xff] __asm("sh2_vec");
 
+enum smr_bits {
+  SMR__CA__ASYNCHRONOUS_MODE = (0 << 7),
+  SMR__CA__CLOCKED_SYNCHRONOUS_MODE = (1 << 7),
+  SMR__CHR__EIGHT_BIT_DATA = (0 << 6),
+  SMR__CHR__SEVEN_BIT_DATA = (1 << 6),
+  SMR__PE__PARITY_BIT_NOT_ADDED_OR_CHECKED = (0 << 5),
+  SMR__PE__PARITY_BIT_ADDED_AND_CHECKED = (1 << 5),
+  SMR__OE__EVEN_PARITY = (0 << 4),
+  SMR__OE__ODD_PARITY = (1 << 4),
+  SMR__STOP__ONE_STOP_BIT = (0 << 3),
+  SMR__STOP__TWO_STOP_BITS = (1 << 3),
+  SMR__MP__DISABLED = (0 << 2),
+  SMR__MP__ENABLED = (1 << 2),
+  SMR__CKS__PHI_4 = (0b00 << 0),
+  SMR__CKS__PHI_16 = (0b01 << 0),
+  SMR__CKS__PHI_64 = (0b10 << 0),
+  SMR__CKS__PHI_256 = (0b11 << 0)
+};
+
+enum scr_bits {
+  SCR__TIE__TRANSMITTER_INTERRUPT_ENABLE = (1 << 7),
+  SCR__RIE__RECEIVE_INTERRUPT_ENABLE = (1 << 6),
+  SCR__TE__TRANSMITTER_ENABLE = (1 << 5),
+  SCR__RE__RECEIVER_ENABLE = (1 << 4),
+  SCR__MPIE__MULTIPROCESSOR_INTERRUPT_ENABLE = (1 << 3),
+  SCR__TEIE__TRANSMIT_END_INTERRUPT_ENABLE = (1 << 2),
+  SCR__CKE__INTERNAL_CLOCK__SCK_INPUT = (0b00 << 0),
+  SCR__CKE__INTERNAL_CLOCK__SCK_OUTPUT = (0b01 << 0),
+  SCR__CKE__EXTERNAL_CLOCK__SCK_INPUT = (0b10 << 0),
+};
+
+enum ssr_bits {
+  SSR__TDRE = (1 << 7),
+  SSR__RDRF = (1 << 6),
+  SSR__ORER = (1 << 5),
+  SSR__FER = (1 << 4),
+  SSR__PER = (1 << 3),
+  SSR__TEND = (1 << 2),
+  SSR__MPB = (1 << 1),
+  SSR__MPBT = (1 << 0),
+};
+
 enum tier_bits {
   TIER__ICIE = (1 << 7),
   TIER__OCIAE = (1 << 3),

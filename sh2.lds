@@ -44,7 +44,9 @@ SECTIONS
   {
     *(.bss.work_ram_l)
   } > work_ram_l
+
+  INCLUDE "saturn/debug.lds"
 }
 
-INCLUDE "symbols.lds"
-INCLUDE "addresses.lds"
+INCLUDE "saturn/symbols.lds"
+INCLUDE "saturn/addresses.lds"
