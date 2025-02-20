@@ -1,0 +1,12 @@
+"block","offset","address","size","name","r/w","description"
+"vdp1",10,"0000",2,"TVMR","RW",
+"vdp1",10,"0002",2,"FBCR","RW",
+"vdp1",10,"0004",2,"PTMR","RW",
+"vdp1",10,"0006",2,"EWDR","RW",
+"vdp1",10,"0008",2,"EWLR","RW",
+"vdp1",10,"000a",2,"EWRR","RW",
+"vdp1",10,"000c",2,"ENDR","RW",
+"vdp1",10,"0010",2,"EDSR","RW",
+"vdp1",10,"0012",2,"LOPR","RW",
+"vdp1",10,"0014",2,"COPR","RW",
+"vdp1",10,"0016",2,"MODR","RW",
