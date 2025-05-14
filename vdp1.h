@@ -35,7 +35,7 @@ typedef struct vdp1_cmd {
     };
     cmd_point point[4];
   };
-  u16 GDRA;
+  u16 GRDA;
   u16 _dummy;
 } vdp1_cmd;
 
@@ -99,7 +99,9 @@ enum pmod_bit {
 #define PMOD__COLOR_MODE__COLOR_BANK_256  (0b100 << 3)
 #define PMOD__COLOR_MODE__RGB             (0b101 << 3)
 
-#define PMOD__COLOR_CALCULATION ( << 0)
+#define PMOD__COLOR_CALCULATION__GOURAUD_SHADING (0b100 << 0)
+#define PMOD__COLOR_CALCULATION__HALF_ORIGINAL_GRAPHIC (0b010 << 0)
+#define PMOD__COLOR_CALCULATION__HALF_BACKGROUND (0b001 << 0)
 };
 
 // see "Pixel Data in Frame Buffer" in VDP1 manual

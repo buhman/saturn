@@ -193,3 +193,15 @@ enum tocr_bits {
 // enum vcrd_bits {
 #define VCRD__FOVV(n) (n << 8)
 // };
+
+enum ccr_bits {
+  CCR__W__WAY0 = (0b00 << 6),
+  CCR__W__WAY1 = (0b01 << 6),
+  CCR__W__WAY2 = (0b10 << 6),
+  CCR__W__WAY3 = (0b11 << 6),
+  CCR__CP__CACHE_PURGE = (0b1 << 4),
+  CCR__TW__TWO_WAY_MODE = (0b1 << 3),
+  CCR__OD__DATA_REPLACEMENT_DISABLE = (0b1 << 2),
+  CCR__ID__INSTRUCTION_REPLACEMENT_DISABLE = (0b1 << 1),
+  CCR__CE__CACHE_ENABLE = (0b1 << 0),
+};
