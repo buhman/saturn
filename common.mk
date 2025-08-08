@@ -30,7 +30,9 @@ define BUILD_BINARY_O
 		$< $@
 endef
 
-as_obj_binary = _binary_$(subst .,_,$(subst /,_,$(basename $(1))))
+makefile_path := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
+makefile_relative = $(shell realpath --relative-to $(makefile_path) $(1))
+as_obj_binary = _binary_$(subst -,_,$(subst .,_,$(subst /,_,$(subst .h,,$(call makefile_relative,$(1))))))
 
 define BUILD_BINARY_H
 	@echo gen $@
