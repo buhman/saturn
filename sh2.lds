@@ -4,6 +4,7 @@ MEMORY
 {
   work_ram_l : ORIGIN = 0x00200000, LENGTH = 1M
   work_ram_h : ORIGIN = 0x06000000, LENGTH = 1M
+  two_way_cache : ORIGIN = 0xc0000000, LENGTH = 2048
 }
 SECTIONS
 {
@@ -12,6 +13,7 @@ SECTIONS
   .text ALIGN(4) : SUBALIGN(4)
   {
     KEEP(*(.text.start))
+    *(.text.start.*)
     *(.text)
     *(.text.*)
   } > work_ram_h
@@ -44,6 +46,12 @@ SECTIONS
   {
     *(.bss.work_ram_l)
   } > work_ram_l
+
+  . = 0xc0000000;
+
+  .cache ALIGN(4) : SUBALIGN(4)
+  {
+  } > two_way_cache AT> work_ram_h
 
   INCLUDE "saturn/debug.lds"
 }

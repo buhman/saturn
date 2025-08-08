@@ -35,10 +35,10 @@ typedef struct scu_reg {
   reg32 _res10;
   reg32 _res11;
   reg32 DTSA;
-  reg32 PPAF;
-  reg32 PPD;
-  reg32 PDA;
-  reg32 PDD;
+  reg32 PPAF; // 0080 DSP Program Control Port
+  reg32 PPD;  // 0084 DSP Program RAM DataPort
+  reg32 PDA;  // 0088 DSP Data RAM Address Port
+  reg32 PDD;  // 008c DSP Data RAM DataPort
   reg32 T0C;
   reg32 T1S;
   reg32 T1MD;

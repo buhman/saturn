@@ -169,8 +169,13 @@ typedef struct vdp2_reg {
   reg16 KTAOF;  /* COEFFICIENT TABLE ADDRESS OFFSET (ROTATION PARAMETER A, B) */
   reg16 OVPNRA; /* SCREEN OVER PATTERN NAME (ROTATION PARAMETER A) */
   reg16 OVPNRB; /* SCREEN OVER PATTERN NAME (ROTATION PARAMETER B) */
-  reg16 RPTAU;  /* ROTATION PARAMETER TABLE ADDRESS (ROTATION PARAMETER A,B) */
-  reg16 RPTAL;  /* ROTATION PARAMETER TABLE ADDRESS (ROTATION PARAMETER A,B) */
+  union {
+    struct {
+      reg16 RPTAU;  /* ROTATION PARAMETER TABLE ADDRESS (ROTATION PARAMETER A,B) */
+      reg16 RPTAL;  /* ROTATION PARAMETER TABLE ADDRESS (ROTATION PARAMETER A,B) */
+    };
+    reg32 RPTA;
+  };
   reg16 WPSX0;  /* WINDOW POSITION (W0, HORIZONTAL START POINT) */
   reg16 WPSY0;  /* WINDOW POSITION (W0, VERTICAL START POINT) */
   reg16 WPEX0;  /* WINDOW POSITION (W0, HORIZONTAL END POINT) */
@@ -275,11 +280,23 @@ enum vrsize_bit {
 // };
 enum ramctl_bit {
   RAMCTL__CRKTE = (1 << 15),
-  RAMCTL__VRBMD = (1 << 9),
-  RAMCTL__VRAMD = (1 << 8),
   RAMCTL__CRMD__RGB_5BIT_1024 = (0b00 << 12),
   RAMCTL__CRMD__RGB_5BIT_2048 = (0b01 << 12),
-  RAMCTL__CRMD__RGB_8BIT_1024 = (0b10 << 12)
+  RAMCTL__CRMD__RGB_8BIT_1024 = (0b10 << 12),
+  RAMCTL__VRBMD = (1 << 9),
+  RAMCTL__VRAMD = (1 << 8),
+  RAMCTL__RDBSB1__COEFFICIENT_TABLE = (0b01 << 6),
+  RAMCTL__RDBSB1__PATTERN_NAME_TABLE = (0b10 << 6),
+  RAMCTL__RDBSB1__CHARACTER_PATTERN_TABLE = (0b11 << 6),
+  RAMCTL__RDBSB0__COEFFICIENT_TABLE = (0b01 << 4),
+  RAMCTL__RDBSB0__PATTERN_NAME_TABLE = (0b10 << 4),
+  RAMCTL__RDBSB0__CHARACTER_PATTERN_TABLE = (0b11 << 4),
+  RAMCTL__RDBSA1__COEFFICIENT_TABLE = (0b01 << 2),
+  RAMCTL__RDBSA1__PATTERN_NAME_TABLE = (0b10 << 2),
+  RAMCTL__RDBSA1__CHARACTER_PATTERN_TABLE = (0b11 << 2),
+  RAMCTL__RDBSA0__COEFFICIENT_TABLE = (0b01 << 0),
+  RAMCTL__RDBSA0__PATTERN_NAME_TABLE = (0b10 << 0),
+  RAMCTL__RDBSA0__CHARACTER_PATTERN_TABLE = (0b11 << 0),
 };
 // enum cyca0l_bit {
 // };
@@ -436,9 +453,13 @@ enum pncr_bit {
 
 enum plsz_bit {
   PLSZ__RBOVR__ = (0b00 << 14),
-  PLSZ__RBPLSZ__ = (0b00 << 12),
+  PLSZ__RBPLSZ__1x1 = (0b00 << 12),
+  PLSZ__RBPLSZ__2x1 = (0b01 << 12),
+  PLSZ__RBPLSZ__2x2 = (0b10 << 12),
   PLSZ__RAOVR__ = (0b00 << 10),
-  PLSZ__RAPLSZ__ = (0b00 << 8),
+  PLSZ__RAPLSZ__1x1 = (0b00 << 8),
+  PLSZ__RAPLSZ__2x1 = (0b01 << 8),
+  PLSZ__RAPLSZ__2x2 = (0b10 << 8),
 
   PLSZ__N3PLSZ__1x1 = (0b00 << 6),
   PLSZ__N3PLSZ__2x1 = (0b01 << 6),
@@ -506,36 +527,68 @@ enum plsz_bit {
 // };
 #define MPN3__N3MP(n) (((n) << 24) | ((n) << 16) | ((n) << 8) | ((n) << 0))
 // enum mpabra_bit {
+#define MPABRA__RAMPB(n) (((n) & 0b111111) << 8)
+#define MPABRA__RAMPA(n) (((n) & 0b111111) << 0)
 // };
 // enum mpcdra_bit {
+#define MPCDRA__RAMPD(n) (((n) & 0b111111) << 8)
+#define MPCDRA__RAMPC(n) (((n) & 0b111111) << 0)
 // };
 // enum mpefra_bit {
+#define MPEFRA__RAMPF(n) (((n) & 0b111111) << 8)
+#define MPEFRA__RAMPE(n) (((n) & 0b111111) << 0)
 // };
 // enum mpghra_bit {
+#define MPGHRA__RAMPH(n) (((n) & 0b111111) << 8)
+#define MPGHRA__RAMPG(n) (((n) & 0b111111) << 0)
 // };
 // enum mpijra_bit {
+#define MPIJRA__RAMPJ(n) (((n) & 0b111111) << 8)
+#define MPIJRA__RAMPI(n) (((n) & 0b111111) << 0)
 // };
 // enum mpklra_bit {
+#define MPKLRA__RAMPL(n) (((n) & 0b111111) << 8)
+#define MPKLRA__RAMPK(n) (((n) & 0b111111) << 0)
 // };
 // enum mpmnra_bit {
+#define MPMNRA__RAMPN(n) (((n) & 0b111111) << 8)
+#define MPMNRA__RAMPM(n) (((n) & 0b111111) << 0)
 // };
 // enum mpopra_bit {
+#define MPOPRA__RAMPP(n) (((n) & 0b111111) << 8)
+#define MPOPRA__RAMPO(n) (((n) & 0b111111) << 0)
 // };
 // enum mpabrb_bit {
+#define MPABRB__RBMPB(n) (((n) & 0b111111) << 8)
+#define MPABRB__RBMPA(n) (((n) & 0b111111) << 0)
 // };
 // enum mpcdrb_bit {
+#define MPCDRB__RBMPD(n) (((n) & 0b111111) << 8)
+#define MPCDRB__RBMPC(n) (((n) & 0b111111) << 0)
 // };
 // enum mpefrb_bit {
+#define MPEFRB__RBMPF(n) (((n) & 0b111111) << 8)
+#define MPEFRB__RBMPE(n) (((n) & 0b111111) << 0)
 // };
 // enum mpghrb_bit {
+#define MPGHRB__RBMPH(n) (((n) & 0b111111) << 8)
+#define MPGHRB__RBMPG(n) (((n) & 0b111111) << 0)
 // };
 // enum mpijrb_bit {
+#define MPIJRB__RBMPJ(n) (((n) & 0b111111) << 8)
+#define MPIJRB__RBMPI(n) (((n) & 0b111111) << 0)
 // };
 // enum mpklrb_bit {
+#define MPKLRB__RBMPL(n) (((n) & 0b111111) << 8)
+#define MPKLRB__RBMPK(n) (((n) & 0b111111) << 0)
 // };
 // enum mpmnrb_bit {
+#define MPMNRB__RBMPN(n) (((n) & 0b111111) << 8)
+#define MPMNRB__RBMPM(n) (((n) & 0b111111) << 0)
 // };
 // enum mpoprb_bit {
+#define MPOPRB__RBMPP(n) (((n) & 0b111111) << 8)
+#define MPOPRB__RBMPO(n) (((n) & 0b111111) << 0)
 // };
 // enum scxin0_bit {
 // };
@@ -603,8 +656,10 @@ enum bktau_bit {
 };
 // enum bktal_bit {
 // };
-// enum rpmd_bit {
-// };
+enum rpmd_bit {
+  RPMD__ROTATION_PARAMETER_A = (0b00 << 0),
+  RPMD__ROTATION_PARAMETER_B = (0b01 << 0),
+};
 // enum rprctl_bit {
 // };
 // enum ktctl_bit {
