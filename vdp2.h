@@ -656,6 +656,10 @@ enum bktau_bit {
 };
 // enum bktal_bit {
 // };
+enum bkta_bit {
+  BKTA__BKCLMD_SINGLE_COLOR = (0 << 31),
+  BKTA__BKCLMD_PER_LINE = (1 << 31),
+};
 enum rpmd_bit {
   RPMD__ROTATION_PARAMETER_A = (0b00 << 0),
   RPMD__ROTATION_PARAMETER_B = (0b01 << 0),
