@@ -8,7 +8,7 @@ AFLAGS = --fatal-warnings
 
 CARCH = -m2 -mb
 CFLAGS += -falign-functions=4 -ffunction-sections -fdata-sections -fshort-enums -ffreestanding -nostdlib
-CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable
+CFLAGS += -Wall -Werror -Wfatal-errors -Wno-error=unused-variable -Wno-array-bounds
 DEPFLAGS = -MMD -E
 LDFLAGS = --gc-sections --print-gc-sections --no-warn-rwx-segment --print-memory-usage --entry=_start --orphan-handling=error
 CXXFLAGS = -std=c++20 -fno-exceptions -fno-non-call-exceptions -fno-rtti -fno-threadsafe-statics

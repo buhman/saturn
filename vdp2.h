@@ -336,9 +336,9 @@ enum bgon_bit {
 // };
 enum chctla_bit {
   CHCTLA__N1CHCN__16_COLOR = (0b00 << 12),
-  CHCTLA__N1CHCN__256_COLOR = (0b00 << 12),
-  CHCTLA__N1CHCN__2048_COLOR = (0b00 << 12),
-  CHCTLA__N1CHCN__32K_COLOR = (0b00 << 12),
+  CHCTLA__N1CHCN__256_COLOR = (0b01 << 12),
+  CHCTLA__N1CHCN__2048_COLOR = (0b10 << 12),
+  CHCTLA__N1CHCN__32K_COLOR = (0b11 << 12),
 
   CHCTLA__N1BMSZ__512x256_DOT = (0b00 << 10),
   CHCTLA__N1BMSZ__512x512_DOT = (0b01 << 10),
