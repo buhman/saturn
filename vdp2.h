@@ -978,3 +978,39 @@ enum clofsl_bit {
 
 #define PATTERN_NAME_TABLE_1WORD__PALETTE(n) (((n) & 0b1111) << 12)
 #define PATTERN_NAME_TABLE_1WORD__CHARACTER(n) (((n) & 0x3ff) << 0)
+
+//
+// rotation screen
+//
+
+struct vdp2_rotation_parameter_table {
+  int32_t screen_start_coordinate_xst;
+  int32_t screen_start_coordinate_yst;
+  int32_t screen_start_coordinate_zst;
+  int32_t screen_vertical_coordinate_increment_dxst;
+  int32_t screen_vertical_coordinate_increment_dyst;
+  int32_t screen_horizontal_coordinate_increment_dx;
+  int32_t screen_horizontal_coordinate_increment_dy;
+  int32_t rotation_matrix_parameter_a;
+  int32_t rotation_matrix_parameter_b;
+  int32_t rotation_matrix_parameter_c;
+  int32_t rotation_matrix_parameter_d;
+  int32_t rotation_matrix_parameter_e;
+  int32_t rotation_matrix_parameter_f;
+  int16_t viewpoint_coordinate_px;
+  int16_t viewpoint_coordinate_py;
+  int16_t viewpoint_coordinate_pz;
+  int16_t _pad0;
+  int16_t center_point_coordinate_px;
+  int16_t center_point_coordinate_py;
+  int16_t center_point_coordinate_pz;
+  int16_t _pad1;
+  int32_t horizontal_shift_mx;
+  int32_t horizontal_shift_my;
+  int32_t scaling_coefficient_kx;
+  int32_t scaling_coefficient_ky;
+  int32_t coefficient_table_start_address_kast;
+  int32_t coefficient_table_vertical_address_increment_dkast;
+  int32_t coefficient_table_horizontal_address_increment_dkax;
+};
+static_assert((sizeof (struct vdp2_rotation_parameter_table)) == 0x60);
